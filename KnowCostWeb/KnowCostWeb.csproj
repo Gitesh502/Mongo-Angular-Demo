@@ -70,6 +70,8 @@
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -198,6 +200,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Chat\ChatAreaRegistration.cs" />
+    <Compile Include="Areas\Chat\Controllers\HomeController.cs" />
     <Compile Include="Areas\Consumer\ConsumerAreaRegistration.cs" />
     <Compile Include="Areas\Public\PublicAreaRegistration.cs" />
     <Compile Include="Areas\Retailer\RetailerAreaRegistration.cs" />
@@ -217,22 +220,46 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\Controllers\CommonController.js" />
+    <Content Include="app\Controllers\LoginController.js" />
     <Content Include="app\Controllers\RegistrationController.js" />
+    <Content Include="app\Factories\LoginFactory.js" />
     <Content Include="app\Factories\RegistrationFactory.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\Chat.css" />
+    <Content Include="Content\css\LoginCss.css" />
+    <Content Include="Content\css\PrivateChat.css" />
     <Content Include="Content\css\RegistrationCss.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Plugins\AwesomeCheckbox\awesome-bootstrap-checkbox.css" />
+    <Content Include="Plugins\AwesomeCheckbox\build.css" />
+    <Content Include="Plugins\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Plugins\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Plugins\Toastr\toaster.min.css" />
+    <Content Include="Plugins\Toastr\toaster.min.js" />
+    <Content Include="Scripts\angular-animate.js" />
+    <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-resource.js" />
+    <Content Include="Scripts\angular-resource.min.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Chat\Views\Home\Index.cshtml" />
+    <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="Scripts\angular-resource.min.js.map" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -271,15 +298,15 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Chat\Controllers\" />
     <Folder Include="Areas\Chat\Models\" />
-    <Folder Include="Areas\Chat\Views\Shared\" />
     <Folder Include="Areas\Consumer\Controllers\" />
     <Folder Include="Areas\Consumer\Models\" />
     <Folder Include="Areas\Consumer\Views\Shared\" />
@@ -300,6 +327,18 @@
     <Content Include="Areas\Retailer\Views\web.config" />
     <Content Include="Areas\Public\Views\web.config" />
     <Content Include="Areas\Chat\Views\web.config" />
+    <Content Include="Plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Plugins\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="Areas\Chat\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Chat\Views\Shared\_Layout.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
@@ -309,6 +348,9 @@
       <Project>{9853f0f7-7dab-4066-b584-68b1632e6d59}</Project>
       <Name>KnowCostData</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

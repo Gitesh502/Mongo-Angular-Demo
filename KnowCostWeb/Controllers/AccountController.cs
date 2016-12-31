@@ -61,7 +61,11 @@ namespace KnowCostWeb.Controllers
                 _userManager = value;
             }
         }
-
+        [AllowAnonymous]
+        public ActionResult Index(string type)
+        {
+            return View();
+        }
         //
         // GET: /Account/Login
         [AllowAnonymous]

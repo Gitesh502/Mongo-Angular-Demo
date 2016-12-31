@@ -15,5 +15,19 @@ namespace KnowCostWeb.ApiModels
         public string ConfirmPassword { get; set; }
         public int StateID { get; set; }
         public int CountryID { get; set; }
+        public bool SendEmail { get; set; }
+    }
+
+    public class RegisterResponse
+    {
+        public int  SignInStatus { get; set; }
+        public string ErrorString { get; set; }
+    }
+    public class UserLoginModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public bool RememberMe { get; set; }
+        public string returnUrl { get; set; }
     }
 }

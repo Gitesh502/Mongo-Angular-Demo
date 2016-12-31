@@ -1,5 +1,4 @@
-﻿@model KnowCostWeb.Models.RegisterViewModel
-@{
+﻿@{
     ViewBag.Title = "Register";
 }
 <link href="~/Content/css/RegistrationCss.css" rel="stylesheet" />
@@ -26,7 +25,7 @@
                     <div class="form-group">
                         <input ng-model="userDetails.email" required type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
                     </div>
-                    <div class="row">
+                    <div class="row hide">
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group">
                                 <select ng-model="country" class="form-control input-sm" id="ddlCountry">
@@ -55,6 +54,9 @@
                         </div>
                     </div>
                     <div class="row">
+                    <div class="col-lg-12"><div class="checkbox checkbox-info checkbox-inline" ><input type="checkbox" class="styled checkbox-inline" id="chexkbox" ng-model="userDetails.sendEmail" ng-checked="userDetails.sendEmail" /> <label for="chexkbox" class="checkbox-inline">Send mail for confirmation</label> </div></div>
+                    </div>
+                    <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group">
                                 <input type="button" ng-click="register();" ng-disabled="registerform.$invalid" value="Register" class="btn btn-info btn-block">
@@ -62,7 +64,7 @@
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="button" value="Cancel" class="btn btn-danger btn-block">
+                                <input type="button" ng-click="RedirectToHome();" value="Cancel" class="btn btn-danger btn-block">
                             </div>
                         </div>
                     </div>
@@ -71,5 +73,3 @@
         </div>
     </div>
 </div>
-<script src="~/app/Factories/RegistrationFactory.js"></script>
-<script src="~/app/Controllers/RegistrationController.js"></script>

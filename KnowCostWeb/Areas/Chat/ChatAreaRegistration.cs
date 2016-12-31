@@ -17,7 +17,8 @@ namespace KnowCostWeb.Areas.Chat
             context.MapRoute(
                 "Chat_default",
                 "Chat/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional ,AreaName="Chat"},
+                new[] { "KnowCostWeb.Areas.Chat.Controllers" }
             );
         }
     }

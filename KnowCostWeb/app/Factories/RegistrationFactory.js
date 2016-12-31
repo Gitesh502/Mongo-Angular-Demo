@@ -10,17 +10,29 @@
             Password: userDetails.password,
             ConfirmPassword: userDetails.confirmPassword,
             StateID: userDetails.state,
-            CountryID: userDetails.country
+            CountryID: userDetails.country,
+            sendEmail: userDetails.sendEmail
         })
-        .success(function () {
-            if (data == "True") {
+        .success(function (response) {
+            console.log(deferredObject);
+            if (response.SignInStatus == 1) {
                 deferredObject.resolve({ success: true });
-            } else {
+            }
+            else if(response.SignInStatus==2)
+            {
+                deferredObject.resolve({ success: false });
+            }
+            else if (response.SignInStatus == 3) {
+                deferredObject.resolve({ success: false });
+            }
+            else if (response.SignInStatus == 0) {
+                deferredObject.resolve({ success: false });
+            }
+            else {
                 deferredObject.resolve({ success: false });
             }
         })
         .error(function () {
-
             deferredObject.resolve({ success: false });
         })
         return deferredObject.promise;
