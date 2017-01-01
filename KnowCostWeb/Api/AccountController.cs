@@ -149,30 +149,38 @@ namespace KnowCostWeb.Api
 
             // This doen't count login failures towards lockout only two factor authentication
             // To enable password failures to trigger lockout, change to shouldLockout: true
-            var result = await SignInHelper.PasswordSignIn(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+            try
             {
-                case SignInStatus.Success:
-                    response.SignInStatus = 1;
-                    RedirectToRoute("Chat_default", new { Status = 1 });
-                    return response;
-                case SignInStatus.LockedOut:
-                    response.SignInStatus = 2;
-                    response.ErrorString = "Your account is lockedout please contact administrator";
-                    return response;
+                var result = await SignInHelper.PasswordSignIn(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        response.SignInStatus = 1;
+                        RedirectToRoute("Chat_default", new { Status = 1 });
+                        return response;
+                    case SignInStatus.LockedOut:
+                        response.SignInStatus = 2;
+                        response.ErrorString = "Your account is lockedout please contact administrator";
+                        return response;
 
-                case SignInStatus.RequiresTwoFactorAuthentication:
-                    response.SignInStatus = 3;
-                    response.ErrorString = "Your account requires TwoFactorAuthentication please contact administrator";
-                    return response;
-                case SignInStatus.Failure:
-                    response.SignInStatus = 0;
-                    response.ErrorString = "Login failed!Please contact administrator";
-                    return response;
-                default:
-                    response.ErrorString = "Invalid login attempt.";
-                    return response;
+                    case SignInStatus.RequiresTwoFactorAuthentication:
+                        response.SignInStatus = 3;
+                        response.ErrorString = "Your account requires TwoFactorAuthentication please contact administrator";
+                        return response;
+                    case SignInStatus.Failure:
+                        response.SignInStatus = 0;
+                        response.ErrorString = "Login failed!Please contact administrator";
+                        return response;
+                    default:
+                        response.ErrorString = "Invalid login attempt.";
+                        return response;
+                }
             }
+            catch(Exception ex)
+            {
+
+            }
+            return response;
         }
 
         #region Helpers
