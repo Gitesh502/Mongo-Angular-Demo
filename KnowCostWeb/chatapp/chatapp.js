@@ -1,3 +1,3 @@
-﻿var chatapp = angular.module('chatapp', ['ngDialog', 'toaster', 'ui.filters']);
+﻿var chatapp = angular.module('chatapp', ['ngDialog', 'toaster']);
 chatapp.controller('ChatController', ChatController);
 chatapp.directive('userdirective', userdirective);
