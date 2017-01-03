@@ -14,25 +14,15 @@ namespace KnowCostWeb
         static List<MessageDetail> CurrentMessage = new List<MessageDetail>();
         public void Connect(string userName)
         {
-
             var id = Context.ConnectionId;
-
             if (ConnectedUsers.Count(x => x.ConnectionId == id) == 0)
             {
-
                 ConnectedUsers.Add(new UserDetail { ConnectionId = id, UserName = userName });
                 var oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-                string sJSON = oSerializer.Serialize(ConnectedUsers);
-                // send to caller
+                string sJSON = oSerializer.Serialize(ConnectedUsers.Distinct());
                 Clients.Caller.onConnected(id, userName, sJSON, CurrentMessage);
-
-                // send to all except caller client
                 Clients.AllExcept(id).onNewUserConnected(id, userName);
-
             }
-
         }
-
-
     }
 }

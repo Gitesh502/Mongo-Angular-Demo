@@ -15,7 +15,7 @@
                 </div>
                 <div class="panel-body">
                     <ul class="media-list chat"  id="userList">
-                        <li class="media"  ng-repeat="x in OnlineUsers track by $index" >
+                        <li class="media"  ng-repeat="x in OnlineUsers track by $index |unique:x.ConnectionId" >
                             <div class="media-body">
                                 <div class="media">
                                     <a class="pull-left" href="#">

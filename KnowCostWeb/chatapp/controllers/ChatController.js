@@ -1,4 +1,4 @@
-﻿var ChatController = function ($scope, toaster, ngDialog) {
+﻿var ChatController = function ($scope, $filter, toaster, ngDialog) {
     $scope.chatHub = $.connection.chatAppHub;// initializes hub
     $scope.name = "Guest";
     $scope.message = "";
@@ -6,7 +6,6 @@
     $scope.messages = {};
     $scope.init = function () {
         $.connection.hub.start().done(function () {
-            //alert("Hub Started");
             $scope.Connect();
         });
         $.connection.hub.error(function (err) {
@@ -26,25 +25,20 @@
 
 
   
-     $scope.OnlineUsers = [];
+    $scope.OnlineUsers = [];
+    $scope.OUsers = [];
     $scope.chatHub.client.onConnected = function (id, userName, allUsers, messages) {
         $scope.OnlineUsers = $.parseJSON(allUsers);
-        console.log($scope.OnlineUsers);
         $scope.$apply();
         $scope.userConnectionId = id;
         $scope.name = userName;
-        console.log(id)
-        console.log(userName)
-        console.log($scope.allUsersList)
-        console.log(messages)
-
-
-    }
-   
-    $scope.AddUsers = function (allUsers) {
-       
     }
     $scope.chatHub.client.onNewUserConnected = function (id, name) {
+
+        $scope.OnlineUsers.push({ ConnectionId: id, UserName: name });
+        $scope.$apply();
+        $scope.userConnectionId = id;
+        $scope.name = name;
     }
     $scope.chatHub.client.onUserDisconnected = function (id, userName) {
     }
@@ -57,4 +51,4 @@
     }
 }
 
-ChatController.$inject = ['$scope', 'toaster', 'ngDialog'];
+ChatController.$inject = ['$scope','$filter', 'toaster', 'ngDialog'];
