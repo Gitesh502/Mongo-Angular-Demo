@@ -12,7 +12,7 @@
         result.then(function (result) {
             console.log(result)
             if (result.success) {
-                $window.location.href = '/Chat/Home/Index' ;
+                localStorageService.set("loggedUser", result.response);
 
             } else {
                 switch (result.Id) {

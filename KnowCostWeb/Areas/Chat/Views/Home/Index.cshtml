@@ -1,4 +1,4 @@
-﻿
+﻿@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Index";
 }
@@ -7,6 +7,8 @@
 <div class="row">&nbsp;</div>
 
 <div  ng-controller="ChatController " ng-init="init();">
+    <input type="hidden" value="@User.Identity.Name" ng-model="name" id="hdnUserName" />
+    <input type="hidden" value="@User.Identity.GetUserId()" ng-model="name" id="hdnUserId" />
     <div class="row">
         <div class="col-md-3">
             <div class="panel panel-primary">
@@ -15,14 +17,14 @@
                 </div>
                 <div class="panel-body">
                     <ul class="media-list chat"  id="userList">
-                        <li class="media"  ng-repeat="x in OnlineUsers track by $index |unique:x.ConnectionId" >
+                        <li class="media"  ng-repeat="x in OnlineUsers track by $index" >
                             <div class="media-body">
                                 <div class="media">
                                     <a class="pull-left" href="#">
                                         <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png">
                                     </a>
                                     <div class="media-body" >
-                                        <h5><a ng-click="openInPrivate($index)">{{x.UserName}}</a></h5>
+                                        <h5><a ng-click="openInPrivate(x.UserName,x.Email)">{{x.UserName}}</a></h5>
                                         <small class="text-muted">Active From 3 hours</small>
                                     </div>
                                 </div>
@@ -37,65 +39,20 @@
                 <div class="panel-collapse collapse out" id="collapseOne" style="display:block">
                     <div class="panel-body">
                         <ul class="chat">
-                            <li class="left clearfix">
-                                <span class="chat-img pull-left">
-                                    <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                            <li ng-class="{'right clearfix': msg.email==email,'left clearfix':msg.email!=email}"  ng-repeat="msg in messages track by $index">
+                                <span  ng-class="{'chat-img pull-right': msg.email==email,'chat-img pull-left':msg.email!=email}">
+                                    <img ng-if="msg.email!=email" src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                                    <img ng-if="msg.email==email" src="http://placehold.it/50/55C1E7/fff&text=Me" alt="User Avatar" class="img-circle" />
                                 </span>
                                 <div class="chat-body clearfix">
                                     <div class="header">
-                                        <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
+                                        <strong class="primary-font" ng-class="{'pull-right primary-font': msg.email==email,'primary-font':msg.email!=email}">{{msg.username}}</strong>
+                                         <small  ng-class="{'text-muted': msg.email==email,'pull-right text-muted':msg.email!=email}">
                                             <span class="glyphicon glyphicon-time"></span>12 mins ago
                                         </small>
                                     </div>
                                     <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                        dolor, quis ullamcorper ligula sodales.
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="right clearfix">
-                                <span class="chat-img pull-right">
-                                    <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-                                </span>
-                                <div class="chat-body clearfix">
-                                    <div class="header">
-                                        <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
-                                        <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                    </div>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                        dolor, quis ullamcorper ligula sodales.
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="left clearfix">
-                                <span class="chat-img pull-left">
-                                    <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                                </span>
-                                <div class="chat-body clearfix">
-                                    <div class="header">
-                                        <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                                            <span class="glyphicon glyphicon-time"></span>14 mins ago
-                                        </small>
-                                    </div>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                        dolor, quis ullamcorper ligula sodales.
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="right clearfix">
-                                <span class="chat-img pull-right">
-                                    <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-                                </span>
-                                <div class="chat-body clearfix">
-                                    <div class="header">
-                                        <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago</small>
-                                        <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                    </div>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                        dolor, quis ullamcorper ligula sodales.
+                                      {{msg.message}}
                                     </p>
                                 </div>
                             </li>
@@ -103,9 +60,9 @@
                     </div>
                     <div class="panel-footer">
                         <div class="input-group">
-                            <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                            <input id="btn-input" type="text" ng-model="groupMsg" class="form-control input-sm" placeholder="Type your message here..." />
                             <span class="input-group-btn">
-                                <button class="btn btn-warning btn-sm" id="btn-chat">
+                                <button class="btn btn-warning btn-sm" id="btn-chat" ng-click="sendGroupMsg()">
                                     Send
                                 </button>
                             </span>
@@ -120,10 +77,10 @@
     </div>
 
 
-
-    <div class="popup-box chat-popup" id="qnimate" style="display:block">
+    @*id="qnimate" style="display:block"*@
+    <div class="popup-box chat-popup privateChatBox"  ng-show="showPrivateBox" style="display:block">
         <div class="popup-head">
-            <div class="popup-head-left pull-left"><img src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" alt="iamgurdeeposahan"> Gurdeep Osahan</div>
+            <div class="popup-head-left pull-left" style="width:180px;overflow-x:hidden"><span ng-model="chatName">{{chatName}}</span></div>
             <div class="popup-head-right pull-right">
                 <div class="btn-group">
                     <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
@@ -195,5 +152,5 @@
     </div>
 
 
-   
+    
 </div>

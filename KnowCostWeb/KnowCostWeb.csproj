@@ -206,6 +206,7 @@
   <ItemGroup>
     <Compile Include="ApiModels\UserDetailsModel.cs" />
     <Compile Include="Api\AccountController.cs" />
+    <Compile Include="Api\UserController.cs" />
     <Compile Include="App_Start\ApplicationIdentityContext.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\EnsureAuthIndexes.cs" />
@@ -245,7 +246,7 @@
     <Content Include="app\Factories\RegistrationFactory.js" />
     <Content Include="chatapp\chatapp.js" />
     <Content Include="chatapp\controllers\ChatController.js" />
-    <Content Include="chatapp\directives\usersdirective.js" />
+    <Content Include="chatapp\factories\GetUserDetailsFactroy.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\Chat.css" />
@@ -274,6 +275,7 @@
     <Content Include="Plugins\Toastr\toaster.min.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
+    <Content Include="Scripts\angular-local-storage.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-resource.js" />
     <Content Include="Scripts\angular-resource.min.js" />
@@ -348,7 +350,9 @@
     <Folder Include="Areas\Retailer\Controllers\" />
     <Folder Include="Areas\Retailer\Models\" />
     <Folder Include="Areas\Retailer\Views\Shared\" />
-    <Folder Include="chatapp\factories\" />
+    <Folder Include="chatapp\config\" />
+    <Folder Include="chatapp\directives\" />
+    <Folder Include="chatapp\filters\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -399,7 +403,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49306</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

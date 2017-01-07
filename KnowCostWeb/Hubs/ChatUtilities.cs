@@ -10,6 +10,8 @@ namespace KnowCostWeb.ChatUtilities
     {
         public string ConnectionId { get; set; }
         public string UserName { get; set; }
+        public string Email { get; set; }
+        public string UserId { get; set; }
     }
 
     public class MessageDetail
@@ -18,6 +20,7 @@ namespace KnowCostWeb.ChatUtilities
         public string UserName { get; set; }
 
         public string Message { get; set; }
+        public string Email { get; set; }
 
     }
 }
