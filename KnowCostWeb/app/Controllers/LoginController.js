@@ -12,7 +12,8 @@
         result.then(function (result) {
             console.log(result)
             if (result.success) {
-                localStorageService.set("loggedUser", result.response);
+                localStorage.setItem("loggedUser", angular.toJson(result.response));
+                $window.location.href = '/Chat/Home/Index';
 
             } else {
                 switch (result.Id) {

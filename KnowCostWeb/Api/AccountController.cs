@@ -156,6 +156,13 @@ namespace KnowCostWeb.Api
                 {
                     case SignInStatus.Success:
                         response.SignInStatus = 1;
+                        var UserDetails = await UserManager.FindByEmailAsync(model.Email);
+                        UserDetailsModel loggedUser = new UserDetailsModel();
+                        loggedUser.FirstName = UserDetails.UserProfile.FirstName;
+                        loggedUser.LastName = UserDetails.UserProfile.LastName;
+                        loggedUser.strUserID = UserDetails.Id;
+                        loggedUser.Email = UserDetails.UserName;
+                        response.LoggedUserDetails = loggedUser;
                         RedirectToRoute("Chat_default", new { Status = 1 });
                         return response;
                     case SignInStatus.LockedOut:

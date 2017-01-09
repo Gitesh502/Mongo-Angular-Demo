@@ -11,7 +11,7 @@
         .success(function (response) {
             console.log(deferedObj);
             if (response.SignInStatus == 1) {
-                deferedObj.resolve({ success: true,Id:1 });
+                deferedObj.resolve({ success: true, Id: 1, response: response.LoggedUserDetails });
             }
             else if (response.SignInStatus == 2) {
                 deferedObj.resolve({ success: false,Id:2 });

@@ -16,12 +16,14 @@ namespace KnowCostWeb.ApiModels
         public int StateID { get; set; }
         public int CountryID { get; set; }
         public bool SendEmail { get; set; }
+        public string strUserID { get; set; }
     }
 
     public class RegisterResponse
     {
         public int  SignInStatus { get; set; }
         public string ErrorString { get; set; }
+        public UserDetailsModel LoggedUserDetails { get; set; }
     }
     public class UserLoginModel
     {

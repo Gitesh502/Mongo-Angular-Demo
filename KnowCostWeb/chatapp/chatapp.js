@@ -1,4 +1,4 @@
-﻿var chatapp = angular.module('chatapp', ['ngDialog', 'toaster', 'LocalStorageModule']).filter('unique', function () {
+﻿var chatapp = angular.module('chatapp', ['ngDialog', 'toaster']).filter('unique', function () {
 
     return function (items, filterOn) {
 
@@ -35,9 +35,6 @@
         }
         return items;
     };
-}).config(function (localStorageServiceProvider) {
-    localStorageServiceProvider
-      .setPrefix('chatApp');
-});
+})
 chatapp.controller('ChatController', ChatController);
-chatapp.directive('userdirective', userdirective);
+
