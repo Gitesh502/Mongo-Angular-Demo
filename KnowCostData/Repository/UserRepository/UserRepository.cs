@@ -21,7 +21,7 @@ namespace KnowCostData.Repository
            
             var builder = Builders<users>.Filter;
             var filter = builder.Eq("Email", email);
-            var collection = obj.MongoCollection.FindAsync(filter).Result.ToList();
+            var collection = obj.MongoCollection.FindAsync(filter).Result.ToList() ;
             return collection;
         }
     }

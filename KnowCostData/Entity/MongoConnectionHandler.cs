@@ -29,7 +29,7 @@ namespace KnowCostData.Entity
 
             //// Get a reference to the collection object from the Mongo database object
             //// The collection name is the type converted to lowercase + "s"
-            MongoCollection = db.GetCollection<T>(Collection);
+            MongoCollection = db.GetCollection<T>(Collection) ;
         }
 
     }
