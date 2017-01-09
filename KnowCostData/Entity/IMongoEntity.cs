@@ -6,5 +6,6 @@ namespace KnowCostData.Entity
     public interface IMongoEntity
     {
         ObjectId Id { get; set; }
+
     }
 }

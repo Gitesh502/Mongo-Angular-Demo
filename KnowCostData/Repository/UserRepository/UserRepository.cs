@@ -7,6 +7,8 @@ using KnowCostData.Services;
 using KnowCostData.Entity;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using KnowCostData.Models;
+
 
 namespace KnowCostData.Repository
 {
@@ -14,10 +16,13 @@ namespace KnowCostData.Repository
     {
         public dynamic GetUserById(string Id, string email)
         {
-            //var builder = Builders<T>.Filter;
-            //var filter = builder.Eq(e => e.Id, new ObjectId(Id));
-            //return MongoConnectionHandler.MongoCollection.Find(filter).FirstOrDefault();
-            return "";
+            users me = new users();
+            MongoConnectionHandler<users> obj= new MongoConnectionHandler<users>("users");
+           
+            var builder = Builders<users>.Filter;
+            var filter = builder.Eq("Email", email);
+            var collection = obj.MongoCollection.FindAsync(filter).Result.ToList();
+            return collection;
         }
     }
 }

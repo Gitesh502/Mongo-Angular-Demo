@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KnowCostData.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,31 +10,19 @@ namespace KnowCostWeb.Api
 {
     public class UserController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        private readonly IUserRepository _userRepository;
+        //public UserController()
+        //{
+        //}
+        public UserController(IUserRepository UserRepository)
         {
-            return new string[] { "value1", "value2" };
+            this._userRepository = UserRepository;
         }
-
-        // GET api/<controller>/5
-        public string Get(int id)
+        [HttpGet]
+        [Route("api/User/GetUserById")]
+        public dynamic GetUserById(string Id, string email)
         {
-            return "value";
-        }
-
-        // POST api/<controller>
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            return _userRepository.GetUserById(Id, email);
         }
     }
 }

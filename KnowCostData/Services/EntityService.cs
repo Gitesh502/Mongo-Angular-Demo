@@ -44,7 +44,7 @@ namespace KnowCostData.Services
 
         protected EntityService()
         {
-            MongoConnectionHandler = new MongoConnectionHandler<T>();
+            MongoConnectionHandler = new MongoConnectionHandler<T>("");
         }
 
         public virtual T GetById(string id)

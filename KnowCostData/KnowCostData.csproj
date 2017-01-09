@@ -61,9 +61,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\AspNetUsers.cs" />
+    <Compile Include="Entity\IAspNetUsers.cs" />
     <Compile Include="Entity\IMongoEntity.cs" />
     <Compile Include="Entity\MongoConnectionHandler.cs" />
     <Compile Include="Entity\MongoEntity.cs" />
+    <Compile Include="Models\UserDetailsDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\UserRepository\IUserRepository.cs" />
     <Compile Include="Repository\UserRepository\UserRepository.cs" />
