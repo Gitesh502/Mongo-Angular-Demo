@@ -17,10 +17,11 @@
         result.then(function (result) {
             console.log(result)
             if (result.success) {
-
+                toaster.pop('info', "Success", "Registration Successfull");
 
             } else {
                 $scope.userDetails.registrationFailure = true;
+                toaster.pop({ type: 'error', title: "Error", body: "Error Occured" });
             }
         });
     }
