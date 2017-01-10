@@ -258,6 +258,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\UnityResolver.cs" />
     <Compile Include="Hubs\ChatAppHub.cs" />
     <Compile Include="Hubs\ChatUtilities.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -276,6 +277,7 @@
     <Content Include="app\Factories\LoginFactory.js" />
     <Content Include="app\Factories\RegistrationFactory.js" />
     <Content Include="chatapp\chatapp.js" />
+    <Content Include="chatapp\ChatJquery.js" />
     <Content Include="chatapp\controllers\ChatController.js" />
     <Content Include="chatapp\factories\GetUserDetailsFactroy.js" />
     <Content Include="Content\bootstrap.css" />

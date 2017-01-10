@@ -1,4 +1,5 @@
 ﻿
+using KnowCostWeb.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace KnowCostWeb
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            var container = UnityConfig.BuildUnityContainer();
+            config.DependencyResolver = new UnityResolver(container);
         }
     }
 }
