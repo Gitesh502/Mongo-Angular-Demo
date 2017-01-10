@@ -9,7 +9,11 @@
     $scope.messages = [];
     $scope.showPrivateBox = false;
     $scope.isBoxClicked = false;
-    $scope.chatName="";
+    $scope.chatName = "";
+    $scope.privateChatBoxes = [];
+    $scope.privateChatBoxes.length = 0;
+    $scope.isPrivateChatMinimized = false;
+    $scope.slide = false;
     $scope.init = function () {
         //var result = GetUserDetailsFactroy($scope.email, $scope.userId);
         //result.then(function (result) {
@@ -74,14 +78,23 @@
     }
     $scope.chatHub.client.sendPrivateMessage = function (windowId, fromUserName, message) {
     }
-    $scope.openInPrivate = function (UserName,Email) {
-        $scope.showPrivateBox = true;
+    $scope.openInPrivate = function (UserName, Email) {
+        // $(".openInPrivate")
+
+        $scope.privateChatBoxes.push({ name: UserName });
+       console.log($scope.privateChatBoxes)
+       // $scope.showPrivateBox = true;
         $scope.chatName = UserName;
     }
 
     $scope.sendGroupMsg = function () {
         $scope.chatHub.server.sendMessageToAll($scope.name, $scope.groupMsg, $scope.email);
     }
+    $scope.MinimizeChatBox = function (index) {
+
+    }
+
+   
 }
 
 ChatController.$inject = ['$scope', '$filter', 'toaster', 'ngDialog'];

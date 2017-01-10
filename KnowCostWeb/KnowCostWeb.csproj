@@ -279,10 +279,12 @@
     <Content Include="chatapp\chatapp.js" />
     <Content Include="chatapp\ChatJquery.js" />
     <Content Include="chatapp\controllers\ChatController.js" />
+    <Content Include="chatapp\directives\ngSlideDown.js" />
     <Content Include="chatapp\factories\GetUserDetailsFactroy.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\Chat.css" />
+    <Content Include="Content\css\ChatBoxAnimate.css" />
     <Content Include="Content\css\LoginCss.css" />
     <Content Include="Content\css\PrivateChat.css" />
     <Content Include="Content\css\RegistrationCss.css" />
@@ -386,7 +388,6 @@
     <Folder Include="Areas\Retailer\Models\" />
     <Folder Include="Areas\Retailer\Views\Shared\" />
     <Folder Include="chatapp\config\" />
-    <Folder Include="chatapp\directives\" />
     <Folder Include="chatapp\filters\" />
   </ItemGroup>
   <ItemGroup>
