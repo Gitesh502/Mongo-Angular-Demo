@@ -23,4 +23,10 @@ namespace KnowCostWeb.ChatUtilities
         public string Email { get; set; }
 
     }
+
+    public class PrivateChatMessage
+    {
+        public string userName { get; set; }
+        public string message { get; set; }
+    }
 }

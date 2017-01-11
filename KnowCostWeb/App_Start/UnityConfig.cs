@@ -25,6 +25,7 @@ namespace KnowCostWeb
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<IChatRepository, ChatRepository>();
             //DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             //GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
             return container;

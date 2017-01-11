@@ -26,7 +26,7 @@
                                         <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png">
                                     </a>
                                     <div class="media-body" >
-                                        <h5><a ng-click="openInPrivate(x.UserName,x.Email)">{{x.UserName}}</a></h5>
+                                        <h5><a ng-click="openInPrivate(x.UserName,x.Email,x.ConnectionId)">{{x.UserName}}</a></h5>
                                         <small class="text-muted">Active From 3 hours</small>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
     @*id="chat_window_1"*@
         <div class="privateChatBox row" >
             <div style="position:fixed">
-                <div ng-repeat="x in privateChatBoxes track by $index" ng-model="privateChatBoxes">
+                <div ng-repeat="x in privateChatBoxes track by $index" >
                     <div class="row chat-window col-xs-5 col-md-4 privateChatWindow "    ng-style="$index<=2?{'left':($index)*425}:{'left':0*425}" style="margin-left:10px;">
                         <div class="col-xs-12 col-md-12">
                             <div class="panel panel-default">
@@ -105,23 +105,25 @@
                                     </div>
                                 </div>
                                 <div class="panel-body msg_container_base "  ng-slide-down="widgetExpanded" lazy-render duration="0.8" >
-                                    <div class="row msg_container base_sent">
-                                        <div class="col-md-10 col-xs-10">
-                                            <div class="messages msg_sent">
+                                    <div class="row msg_container base_sent" ng-class="(msg.from == UserInPrivateChat.name)?'row msg_container base_sent':'row msg_container base_receive'" ng-repeat="msg in PrivateMessages | filter:({to: UserInPrivateChat.ConnectionId})">
+                                        <div class="col-md-2 col-xs-2 avatar" ng-if="msg.from != UserInPrivateChat.name">
+                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
+                                        </div>
+                                          <div class="col-md-10 col-xs-10">
+                                            <div class="messages msg_sent"  ng-class="(msg.from == UserInPrivateChat.name)?'messages msg_sent':'messages msg_receive'">
                                                 <p>
-                                                    that mongodb thing looks good, huh?
-                                                    tiny master db, and huge document store
+                                                   {{msg.message}}
                                                 </p>
                                                 <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-xs-2 avatar">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                                        <div class="col-md-2 col-xs-2 avatar" ng-if="msg.from == UserInPrivateChat.name">
+                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
                                         </div>
                                     </div>
-                                    <div class="row msg_container base_receive">
+                                    @*<div class="row msg_container base_receive">
                                         <div class="col-md-2 col-xs-2 avatar">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
                                         </div>
                                         <div class="col-md-10 col-xs-10">
                                             <div class="messages msg_receive">
@@ -188,13 +190,13 @@
                                         <div class="col-md-2 col-xs-2 avatar">
                                             <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </div>
                                 <div class="panel-footer">
-                                    <div class="input-group">
-                                        <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+                                    <div class="input-group">@*chat_input*@
+                                        <input id="btn-input" type="text" class="form-control input-sm " ng-model="privateMessage"  />
                                         <span class="input-group-btn">
-                                            <button class="btn btn-primary btn-sm" id="btn-chat">Send</button>
+                                            <button class="btn btn-primary btn-sm" ng-click="sendPrivateMessage(x.connectionId,x.name);" id="btn-chat">Send</button>
                                         </span>
                                     </div>
                                 </div>

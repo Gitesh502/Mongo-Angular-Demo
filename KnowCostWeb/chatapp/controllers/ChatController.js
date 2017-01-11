@@ -14,6 +14,10 @@
     $scope.privateChatBoxes.length = 0;
     $scope.isPrivateChatMinimized = false;
     $scope.slide = false;
+    $scope.privateMessage = "";
+    $scope.PrivateMessages = [];
+    $scope.UserInPrivateChat = null;
+    $scope.$parent.UserName = document.getElementById("hdnUserName").value;
     $scope.init = function () {
         //var result = GetUserDetailsFactroy($scope.email, $scope.userId);
         //result.then(function (result) {
@@ -77,12 +81,16 @@
         $scope.$apply();
     }
     $scope.chatHub.client.sendPrivateMessage = function (windowId, fromUserName, message) {
+        $scope.PrivateMessages.push({ to: windowId, from: fromUserName, message: message });
+        if ($scope.$parent.UserName != fromname) // otheruser's pm
+        {
+            if ($scope.UserInPrivateChat == null) {
+                $scope.UserInPrivateChat = { name: fromUserName, ConnectionId: windowId }
+            }
+        }
     }
-    $scope.openInPrivate = function (UserName, Email) {
-        // $(".openInPrivate")
-
-        $scope.privateChatBoxes.push({ name: UserName });
-       console.log($scope.privateChatBoxes)
+    $scope.openInPrivate = function (UserName, Email,ConnectionId) {
+        $scope.privateChatBoxes.push({ name: UserName,connectionId:ConnectionId });
        // $scope.showPrivateBox = true;
         $scope.chatName = UserName;
     }
@@ -93,7 +101,10 @@
     $scope.MinimizeChatBox = function (index) {
 
     }
-
+    $scope.sendPrivateMessage=function(toUserConnId,toUserMailID)
+    {
+        $scope.chatHub.server.sendPrivateMessage(toUserConnId, $scope.privateMessage);
+    }
    
 }
 

@@ -22,7 +22,7 @@ namespace KnowCostWeb.Api
         [Route("api/User/GetUserById")]
         public dynamic GetUserById(string Id, string email)
         {
-            return _userRepository.GetUserById(Id, email);
+            return _userRepository.GetUserById(email);
         }
     }
 }

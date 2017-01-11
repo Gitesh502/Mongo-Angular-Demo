@@ -11,6 +11,7 @@ namespace KnowCostData.Entity
     [BsonIgnoreExtraElements]
     public class users:MongoEntity
     {
+      
         public string UserName { get; set; }
         public string SecurityStamp{get;set;}
         public string Email { get; set; }

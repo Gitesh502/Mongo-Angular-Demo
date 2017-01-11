@@ -141,6 +141,7 @@ namespace KnowCostWeb.Api
         [Route("api/Account/Login")]
         public async Task<RegisterResponse> Login(UserLoginModel model)
         {
+            User.Identity.GetUserId();
             RegisterResponse response = new RegisterResponse();
             if (!ModelState.IsValid)
             {

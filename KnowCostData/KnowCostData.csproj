@@ -62,12 +62,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\AspNetUsers.cs" />
+    <Compile Include="Entity\ConnectedUsers.cs" />
     <Compile Include="Entity\IAspNetUsers.cs" />
     <Compile Include="Entity\IMongoEntity.cs" />
     <Compile Include="Entity\MongoConnectionHandler.cs" />
     <Compile Include="Entity\MongoEntity.cs" />
+    <Compile Include="Models\ChatModel.cs" />
     <Compile Include="Models\UserDetailsDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ChatRepository\ChatRepository.cs" />
+    <Compile Include="Repository\ChatRepository\IChatRepository.cs" />
     <Compile Include="Repository\UserRepository\IUserRepository.cs" />
     <Compile Include="Repository\UserRepository\UserRepository.cs" />
     <Compile Include="Services\EntityService.cs" />

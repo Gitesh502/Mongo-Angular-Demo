@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace KnowCostData.Repository
 {
-    public interface IUserRepository
+    public interface IChatRepository
     {
-        users GetUserById(string email);
-             
+        dynamic SaveConnectedUsers(ConnectedUsers repObj);
     }
 }
