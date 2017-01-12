@@ -1,4 +1,4 @@
-﻿var chatapp = angular.module('chatapp', ['ngDialog', 'toaster', 'ngAnimate']).filter('unique', function () {
+﻿var chatapp = angular.module('chatapp', ['ngDialog', 'toaster', 'ngAnimate', 'angular-web-notification']).filter('unique', function () {
 
     return function (items, filterOn) {
 
@@ -52,5 +52,6 @@
 //    }
 //});
 chatapp.controller('ChatController', ChatController);
+chatapp.directive('ShowNotification', ShowNotification);
 //chatapp.directive('ngSlideDown', ngSlideDown);
 

@@ -281,6 +281,7 @@
     <Content Include="chatapp\ChatJquery.js" />
     <Content Include="chatapp\controllers\ChatController.js" />
     <Content Include="chatapp\directives\ngSlideDown.js" />
+    <Content Include="chatapp\directives\ShowNotification.js" />
     <Content Include="chatapp\factories\GetUserDetailsFactroy.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -296,6 +297,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Plugins\AwesomeCheckbox\awesome-bootstrap-checkbox.css" />
     <Content Include="Plugins\AwesomeCheckbox\build.css" />
+    <Content Include="Plugins\DesktopNotifications\angular-web-notification.js" />
+    <Content Include="Plugins\DesktopNotifications\Notification.js" />
     <Content Include="Plugins\Dialog\ngDialog-custom-width.css" />
     <Content Include="Plugins\Dialog\ngDialog-theme-default.css" />
     <Content Include="Plugins\Dialog\ngDialog-theme-default.min.css" />
