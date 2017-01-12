@@ -12,7 +12,8 @@ using Microsoft.Owin.Security;
 //using System.Web.Http;
 using KnowCostData.Entity;
 using KnowCostData.Repository;
-
+using Microsoft.AspNet.SignalR.Hubs;
+using System.Threading.Tasks;
 
 namespace KnowCostWeb
 {
@@ -32,7 +33,6 @@ namespace KnowCostWeb
         {
 
             var User = _userrepository.GetUserByEmail(userName);
-
             var id = Context.ConnectionId;
             ConnectedUsers cu = new ConnectedUsers();
             cu.UserID = User.Id;
@@ -41,14 +41,15 @@ namespace KnowCostWeb
             cu.ConnectedTime = DateTime.Now;
             cu.Name = userName;
             _chatrepository.SaveConnectedUsers(cu);
+
+
             if (ConnectedUsers.Count(x => x.ConnectionId == id) == 0)
             {
+                string email = userName;
                 ConnectedUsers.Add(new UserDetail { ConnectionId = id, UserName = userName,Email=userName });
                 var oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
                 string sJSON = oSerializer.Serialize(ConnectedUsers.Distinct());
                 Clients.Caller.onConnected(id, userName, sJSON, CurrentMessage);
-
-                string email = userName;
                 Clients.AllExcept(id).onNewUserConnected(id, userName, email);
             }
         }
@@ -74,6 +75,20 @@ namespace KnowCostWeb
                 Clients.Caller.sendPrivateMessage(toUserId, fromUser.UserName, message);
             }
 
+        }
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            var item = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
+            if (item != null)
+            {
+                ConnectedUsers.Remove(item);
+
+                var id = Context.ConnectionId;
+                Clients.All.onUserDisconnected(id, item.UserName);
+
+            }
+
+            return base.OnDisconnected(stopCalled);
         }
         #region Save cache
 

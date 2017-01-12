@@ -1,7 +1,7 @@
 ﻿var RegistrationFactory=function($http,$q)
 {
     return function (userDetails) {
-        var deferedObject = $q.defer();
+        var deferredObject = $q.defer();
 
         $http.post("/api/Account/Register", {
             FirstName: userDetails.firstName,

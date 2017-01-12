@@ -1,4 +1,4 @@
-﻿var RegistrationController = function ($scope, RegistrationFactory, $controller,$window) {
+﻿var RegistrationController = function ($scope, RegistrationFactory, $controller, $window, toaster) {
     $controller('CommonController', {$scope:$scope,$window: $window})
     $scope.userDetails = {
         firstName: "",
@@ -18,6 +18,8 @@
             console.log(result)
             if (result.success) {
                 toaster.pop('info', "Success", "Registration Successfull");
+               // localStorage.setItem("loggedUser", angular.toJson(result.response));
+                $window.location.href = '/Chat/Home/Index';
 
             } else {
                 $scope.userDetails.registrationFailure = true;
@@ -26,4 +28,4 @@
         });
     }
 }
-RegistrationController.$inject = ['$scope', 'RegistrationFactory', '$controller', '$window'];
+RegistrationController.$inject = ['$scope', 'RegistrationFactory', '$controller', '$window', 'toaster'];
