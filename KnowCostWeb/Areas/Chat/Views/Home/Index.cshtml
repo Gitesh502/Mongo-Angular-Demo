@@ -19,7 +19,7 @@
                 </div>
                 <div class="panel-body">
                     <ul class="media-list chat"  id="userList">
-                        <li class="media"  ng-repeat="x in OnlineUsers track by $index" >
+                        <li class="media"  ng-repeat="x in OnlineUsers   track by $index" >
                             <div class="media-body">
                                 <div class="media">
                                     <a class="pull-left" href="#">
@@ -92,12 +92,12 @@
         <div class="privateChatBox row" >
             <div style="position:fixed">
                 <div ng-repeat="x in privateChatBoxes track by $index" >
-                    <div class="row chat-window col-xs-5 col-md-4 privateChatWindow "    ng-style="$index<=2?{'left':($index)*425}:{'left':0*425}" style="margin-left:10px;">
+                    <div class="row chat-window col-xs-5 col-md-4 privateChatWindow"  ng-style="$index<=2?{'left':($index)*425}:{'left':0*425}" style="margin-left:10px;">
                         <div class="col-xs-12 col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading top-bar">
                                     <div class="col-md-8 col-xs-8">
-                                        <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> {{x.name}}</h3>
+                                        <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> {{x.Uname}}</h3>
                                     </div>
                                     <div class="col-md-4 col-xs-4" style="text-align: right;">
                                         <a href="#"><span id="minim_chat_window" ng-click="widgetExpanded = !widgetExpanded"  class="head glyphicon glyphicon-minus icon_minim"></span></a>
@@ -105,98 +105,29 @@
                                     </div>
                                 </div>
                                 <div class="panel-body msg_container_base "  ng-slide-down="widgetExpanded" lazy-render duration="0.8" >
-                                    <div class="row msg_container base_sent" ng-class="(msg.from == UserInPrivateChat.name)?'row msg_container base_sent':'row msg_container base_receive'" ng-repeat="msg in PrivateMessages | filter:({to: UserInPrivateChat.ConnectionId})">
-                                        <div class="col-md-2 col-xs-2 avatar" ng-if="msg.from != UserInPrivateChat.name">
+                                    <div class="row msg_container base_sent" ng-class="(msg.from == UserInPrivateChat.name)?'row msg_container base_receive':'row msg_container base_sent'" ng-repeat="msg in PrivateMessages | filter:({to: UserInPrivateChat.ConnectionId}) track by $index">
+                                        <div class="col-md-2 col-xs-2 avatar" ng-if="msg.from == UserInPrivateChat.name">
                                             <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
                                         </div>
                                           <div class="col-md-10 col-xs-10">
-                                            <div class="messages msg_sent"  ng-class="(msg.from == UserInPrivateChat.name)?'messages msg_sent':'messages msg_receive'">
+                                            <div   ng-class="(msg.from == UserInPrivateChat.name)?'messages msg_receive':'messages msg_sent'">
                                                 <p>
                                                    {{msg.message}}
                                                 </p>
                                                 <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-xs-2 avatar" ng-if="msg.from == UserInPrivateChat.name">
+                                        <div class="col-md-2 col-xs-2 avatar" ng-if="msg.from != UserInPrivateChat.name">
                                             <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
                                         </div>
                                     </div>
-                                    @*<div class="row msg_container base_receive">
-                                        <div class="col-md-2 col-xs-2 avatar">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
-                                        </div>
-                                        <div class="col-md-10 col-xs-10">
-                                            <div class="messages msg_receive">
-                                                <p>
-                                                    that mongodb thing looks good, huh?
-                                                    tiny master db, and huge document store
-                                                </p>
-                                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row msg_container base_receive">
-                                        <div class="col-md-2 col-xs-2 avatar">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
-                                        </div>
-                                        <div class="col-xs-10 col-md-10">
-                                            <div class="messages msg_receive">
-                                                <p>
-                                                    that mongodb thing looks good, huh?
-                                                    tiny master db, and huge document store
-                                                </p>
-                                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row msg_container base_sent">
-                                        <div class="col-xs-10 col-md-10">
-                                            <div class="messages msg_sent">
-                                                <p>
-                                                    that mongodb thing looks good, huh?
-                                                    tiny master db, and huge document store
-                                                </p>
-                                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2 col-xs-2 avatar">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
-                                        </div>
-                                    </div>
-                                    <div class="row msg_container base_receive">
-                                        <div class="col-md-2 col-xs-2 avatar">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
-                                        </div>
-                                        <div class="col-xs-10 col-md-10">
-                                            <div class="messages msg_receive">
-                                                <p>
-                                                    that mongodb thing looks good, huh?
-                                                    tiny master db, and huge document store
-                                                </p>
-                                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row msg_container base_sent">
-                                        <div class="col-md-10 col-xs-10 ">
-                                            <div class="messages msg_sent">
-                                                <p>
-                                                    that mongodb thing looks good, huh?
-                                                    tiny master db, and huge document store
-                                                </p>
-                                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2 col-xs-2 avatar">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
-                                        </div>
-                                    </div>*@
+
                                 </div>
                                 <div class="panel-footer">
-                                    <div class="input-group">@*chat_input*@
-                                        <input id="btn-input" type="text" class="form-control input-sm " ng-model="privateMessage"  />
+                                    <div class="input-group">
+                                        <input  type="text" ng-model="privateBoxMessage.pMessage"   class="form-control input-sm" />
                                         <span class="input-group-btn">
-                                            <button class="btn btn-primary btn-sm" ng-click="sendPrivateMessage(x.connectionId,x.name);" id="btn-chat">Send</button>
+                                            <input type="button" class="btn btn-primary btn-sm" ng-click="sendPrivateMessage(x.connectionId,x.name);" id="btn-chat" value="Send" />
                                         </span>
                                     </div>
                                 </div>
@@ -208,7 +139,6 @@
             
         </div>
 
-   
     
     
 </div>
