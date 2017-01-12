@@ -9,7 +9,7 @@ namespace KnowCostData.Repository
 {
     public interface IUserRepository
     {
-        users GetUserById(string email);
+        users GetUserByEmail(string email);
              
     }
 }

@@ -5,7 +5,7 @@
             email: email,
             id: userId
         }
-        $http.get('/api/User/GetUserDetails', UserModel)
+        $http.get('/api/User/GetUserByEmail', email)
         .success(function (response) {
             console.log(deferedObj);
             deferedObj.resolve({ success: true, Id: 1,response:response});

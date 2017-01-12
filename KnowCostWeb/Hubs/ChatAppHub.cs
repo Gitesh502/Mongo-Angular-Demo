@@ -31,7 +31,7 @@ namespace KnowCostWeb
         public void Connect(string userName)
         {
 
-            var User = _userrepository.GetUserById(userName);
+            var User = _userrepository.GetUserByEmail(userName);
 
             var id = Context.ConnectionId;
             ConnectedUsers cu = new ConnectedUsers();

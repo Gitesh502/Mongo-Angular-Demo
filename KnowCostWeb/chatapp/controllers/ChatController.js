@@ -19,17 +19,17 @@
     $scope.UserInPrivateChat = null;
     $scope.$parent.UserName = document.getElementById("hdnUserName").value;
     $scope.init = function () {
-        //var result = GetUserDetailsFactroy($scope.email, $scope.userId);
-        //result.then(function (result) {
-        //    console.log(result)
-        //    if (result.success) {
-        //        $window.location.href = '/Chat/Home/Index';
-
-        //    }
-        //    else {
-        //        alert("Error is getting user details.Please refresh the page")
-        //    }
-        //})
+        var result = GetUserDetailsFactroy($scope.email, $scope.userId);
+        result.then(function (result) {
+            console.log(result)
+            if (result.success) {
+               // $window.location.href = '/Chat/Home/Index';
+                localStorage.setItem("loggedUser",angular.toJson(result.response));
+            }
+            else {
+                alert("Error is getting user details.Please refresh the page")
+            }
+        })
         $.connection.hub.start().done(function () {
             if ($scope.userConnectionId == "")
                 $scope.Connect();

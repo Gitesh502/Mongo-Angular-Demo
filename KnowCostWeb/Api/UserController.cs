@@ -1,4 +1,5 @@
-﻿using KnowCostData.Repository;
+﻿using KnowCostData.Entity;
+using KnowCostData.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,10 @@ namespace KnowCostWeb.Api
             this._userRepository = UserRepository;
         }
         [HttpGet]
-        [Route("api/User/GetUserById")]
-        public dynamic GetUserById(string Id, string email)
+        [Route("api/User/GetUserByEmail")]
+        public users GetUserByEmail(string email)
         {
-            return _userRepository.GetUserById(email);
+            return _userRepository.GetUserByEmail(email);
         }
     }
 }

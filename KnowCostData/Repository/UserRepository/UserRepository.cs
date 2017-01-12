@@ -14,7 +14,7 @@ namespace KnowCostData.Repository
 {
     public class UserRepository:IUserRepository
     {
-        public users GetUserById(string email)
+        public users GetUserByEmail(string email)
         {
             users me = new users();
             MongoConnectionHandler<users> obj= new MongoConnectionHandler<users>("users");
