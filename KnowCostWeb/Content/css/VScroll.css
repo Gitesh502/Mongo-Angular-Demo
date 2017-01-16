@@ -1,0 +1,31 @@
+﻿ul.container{
+  
+  /*width: 300px;*/
+  /*box-sizing: border-box;
+  border: 2px solid #878ced;
+  list-style-type: none outside none;
+  padding-left: 0px;
+  border-radius: 0px 10px 5px 10px;
+  box-shadow: 2px 1px 4px 0px rgba(50, 92, 50, 0.78);
+  height: 200px;*/
+  overflow: hidden;
+  font-smoothing: antialiased;
+}
+
+ul.container li
+{
+  list-style: none;
+  padding: 12px 20px;
+  
+  transition: background-color 5s linear, color 2s;
+  
+}
+
+ul.container li:nth-child(2n){
+/* background: linear-gradient(to bottom, #878ced 0%,#0072c6 49%,#007 51%,#878ced 100%); 
+  color: #FFF ;*/
+}
+
+ul.container li:first-child{
+  
+}
