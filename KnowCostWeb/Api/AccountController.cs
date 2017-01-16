@@ -76,15 +76,15 @@ namespace KnowCostWeb.Api
 
                     if (result.Succeeded)
                     {
+                       /// model.SendEmail
+                        //if (true)
+                        //{
+                        //    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        //    var callbackUrl = Url.Link("Default", new { Controller = "Account", Action = "ConfirmEmail", userId = user.Id, code = code });
+                        //    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
 
-                        if (model.SendEmail)
-                        {
-                            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                            var callbackUrl = Url.Link("Default", new { Controller = "Account", Action = "ConfirmEmail", userId = user.Id, code = code });
-                            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-
-                        }
-                        else
+                        //}
+                        //else
                         {
                             var Sresult = await SignInHelper.PasswordSignIn(model.Email, model.Password, false, shouldLockout: false);
 
@@ -140,7 +140,7 @@ namespace KnowCostWeb.Api
         [Route("api/Account/Login")]
         public async Task<RegisterResponse> Login(UserLoginModel model)
         {
-            User.Identity.GetUserId();
+            
             RegisterResponse response = new RegisterResponse();
             if (!ModelState.IsValid)
             {

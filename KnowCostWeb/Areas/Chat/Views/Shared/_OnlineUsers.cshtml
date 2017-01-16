@@ -30,7 +30,7 @@
 
     <ul class="nav nav-list" style="top: 0px;">
         <li class="" ng-repeat="x in OnlineUsers track by $index">
-            <a ng-click="privateChatBoxProperties.isboxopened || openInPrivate(x.UserName,x.Email,x.ConnectionId);">
+            <a ng-click="privateChatBoxProperties.isboxopened || openInPrivate(x.UserName,x.Email,x.ConnectionId,x.FullName);">
                 <i class="menu-icon fa fa-user"></i>
                 @*<img class="media-object img-circle" style="max-height:40px;" src="~/Images/noimage.jpg">*@
                 <span class="menu-text"> {{x.FullName}} 

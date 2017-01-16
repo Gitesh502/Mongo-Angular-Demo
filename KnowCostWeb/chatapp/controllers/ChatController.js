@@ -3,21 +3,26 @@
     $scope.name = document.getElementById("hdnUserName").value;
     $scope.email = document.getElementById("hdnUserName").value;
     $scope.userId = document.getElementById("hdnUserId").value;
-    $scope.message = "";
-    $scope.userConnectionId = "";
+    $scope.$parent.UserName = document.getElementById("hdnUserName").value;
+
     $scope.groupMsg = "";
+    $scope.message = "";
     $scope.messages = [];
+
+
+    $scope.userConnectionId = "";
+   
+   
     $scope.regUserGridOptions = {};
     $scope.isBoxClicked = false;
     $scope.chatName = "";
     $scope.privateChatBoxes = [];
-    $scope.privateChatBoxes.length = 0;
     $scope.isPrivateChatMinimized = false;
     $scope.slide = false;
     $scope.expand = true;
     $scope.PrivateMessages = [];
     $scope.UserInPrivateChat = null;
-    $scope.$parent.UserName = document.getElementById("hdnUserName").value;
+ 
     $scope.bgimages = [
         '../Images/backgrounds/1.jpg'
     ];
@@ -120,65 +125,52 @@
                     }
                     $scope.lstregisteredUsers.push($scope.registeredUsers)
                 });
-               // $scope.$apply();
-                //$scope.regUserGridOptions.enableSorting = false;
-                //$scope.regUserGridOptions.columnDefs = [{ name: 'Name', field: 'fullName' }, { name: 'Send Request', field: 'email' }];
-                //$scope.regUserGridOptions.data=$scope.lstregisteredUsers;
-
-                //$scope.regUserGridOptions = {
-                //    enableSorting: false,
-                //    data: $scope.lstregisteredUsers,
-                //    columnDefs: [{ name: 'Name', field: 'fullName' }, { name: 'Send Request', field: 'email' }],
-                  
-                //};
-               // $scope.$apply();
+               
             }
             else {
                 alert("Error is getting user details.Please refresh the page")
             }
         })
     }
-    $scope.Connect = function () {
-        // ngDialog.open({ template: 'openConnectPopup' });
 
+
+
+
+    //Connect to chathub 
+
+    $scope.Connect = function () {
         $scope.chatHub.server.connect($scope.email);
     }
 
-    $scope.connectHub = function () {
-        if ($scope.chatHub !== null && $scope.chatHub !== undefined)
-            $scope.chatHub.server.connect($scope.name);
-    }
+   
 
 
 
     $scope.OnlineUsers = [];
     $scope.OUsers = [];
-    $scope.chatHub.client.onConnected = function (id, userName, allUsers, messages) {
+    $scope.chatHub.client.onConnected = function (id,onlineUsers, messages) {
+        $scope.userConnectionId = id;
+        $scope.$parent.connectionId = id;
         $scope.OnlineUsers.length = 0;
-        //$scope.OnlineUsers = $filter('unique')($.parseJSON(allUsers), 'Email');
-        $scope.OnlineUsers = $.parseJSON(allUsers);
+        $scope.OnlineUsers = $.parseJSON(onlineUsers);
         $scope.$apply();
         angular.forEach(messages, function (value, key) {
-            console.log(key + ': ' + value);
-            $scope.messages.push({ message: value.Message, username: value.UserName, email: value.Email });
+            $scope.messages.push({ message: value.Message, username: value.UserName, email: value.Email, firstName: value.firstName });
         });
         $scope.$apply();
-        $scope.userConnectionId = id;
-        $scope.name = userName;
         for (i = $scope.OnlineUsers.length - 1; i >= 0; i--) {
-            if ($scope.OnlineUsers[i].UserName === userName) $scope.OnlineUsers.splice(i, 1);
+            if ($scope.OnlineUsers[i].UserName === $scope.$parent.UserName) $scope.OnlineUsers.splice(i, 1);
         }
-
         $scope.$apply();
     }
-    $scope.chatHub.client.onNewUserConnected = function (id, name, email,firstName,lastName,fullName) {
+    $scope.chatHub.client.onNewUserConnected = function (connectUser) {//id, name, email,firstName,lastName,fullName
         for (i = $scope.OnlineUsers.length - 1; i >= 0; i--) {
-            if ($scope.OnlineUsers[i].UserName === email) $scope.OnlineUsers.splice(i, 1);
+            if ($scope.OnlineUsers[i].UserName === connectUser.UserName) $scope.OnlineUsers.splice(i, 1);
         }
-        $scope.OnlineUsers.push({ ConnectionId: id, UserName: name, Email: email,FirstName:firstName,LastName:lastName,FullName:fullName });
-        //$scope.OnlineUsers = $filter('unique')($scope.OnlineUsers, 'Email');
+        $scope.OnlineUsers.push(connectUser);
         $scope.OnlineUsers = $scope.OnlineUsers;
         $scope.$apply();
+
         var title = email +" is online";
         DesktopNotificationsFactory(title,"")
     }
@@ -231,9 +223,9 @@
         $scope.privateMessageCount.connectionId = windowId;
         $scope.$apply();
     }
-    $scope.openInPrivate = function (UserName, Email, ConnectionId) {
+    $scope.openInPrivate = function (UserName, Email, ConnectionId,FullName) {
       //  $scope.showPrivateBox = true;
-        $scope.privateChatBoxes.push({ Uname: UserName, connectionId: ConnectionId });
+        $scope.privateChatBoxes.push({ Uname: UserName, connectionId: ConnectionId,FullName:FullName });
         $scope.chatName = UserName;
         $scope.privateChatBoxProperties.showPrivateBox = true;
         $scope.privateChatBoxProperties.isboxopened = true;

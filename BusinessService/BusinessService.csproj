@@ -33,10 +33,6 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="BusinessEntities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\BusinessEntities\bin\Debug\BusinessEntities.dll</HintPath>
-    </Reference>
     <Reference Include="MongoDB.Bson">
       <HintPath>..\packages\MongoDB.Bson.2.4.0\lib\net45\MongoDB.Bson.dll</HintPath>
     </Reference>
@@ -63,6 +59,10 @@
     <Compile Include="Services\UserService\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessEntities\BusinessEntities.csproj">
+      <Project>{a5da76ea-fee3-436a-bdcf-aaf80b0e5ad1}</Project>
+      <Name>BusinessEntities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KnowCostData\KnowCostData.csproj">
       <Project>{9853f0f7-7dab-4066-b584-68b1632e6d59}</Project>
       <Name>KnowCostData</Name>

@@ -19,35 +19,45 @@ namespace KnowCostWeb
     public class ChatAppHub : Hub
     {
         static List<UserDetail> ConnectedUsers = new List<UserDetail>();
+        static List<ConnectedUsers> OnlineUsers = new List<ConnectedUsers>();
         static List<MessageDetail> CurrentMessage = new List<MessageDetail>();
         private readonly IUserService _iuserservices;
         public ChatAppHub(IUserService IUserServices)
         {
             _iuserservices = IUserServices;
         }
-        public void Connect(string email)
+        public void Connect(string NickName)
         {
-
+            string email = Context.User.Identity.GetUserName();
             var User = _iuserservices.GetUserByEmail(email);
-            //var id = Context.ConnectionId;
-            //ConnectedUsers cu = new ConnectedUsers();
-            //cu.UserID = User.Id;
-            //cu.ConnectionId = id;
-            //cu.UserName = userName;
-            //cu.ConnectedTime = DateTime.Now;
-            //cu.Name = userName;
-            //_chatrepository.SaveConnectedUsers(cu);
-
             var id = Context.ConnectionId;
             var currentconnectionId=Context.ConnectionId;
             if (ConnectedUsers.Count(x => x.ConnectionId == id) == 0)
             {
-                ConnectedUsers.Add(new UserDetail { ConnectionId = id, UserName = email, Email = email,FirstName=User.FirstName,LastName=User.LastName,FullName=User.FullName });
+                ConnectedUsers objcu = new ChatUtilities.ConnectedUsers();
+                objcu.ConnectionId = id;
+                objcu.Email = User.Email;
+                objcu.UserName = User.UserName;
+                objcu.UserId = User.Id.ToString();
+                objcu.FirstName = User.FirstName;
+                objcu.LastName = User.LastName;
+                objcu.FullName = User.FullName;
+                objcu.NickName = NickName;
+
+                OnlineUsers.Add(objcu);
+
                 var oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-                string sJSON = oSerializer.Serialize(ConnectedUsers.Distinct());
-                Clients.Caller.onConnected(id, email, sJSON, CurrentMessage);
-                Clients.AllExcept(currentconnectionId).onNewUserConnected(id, email, email, User.FirstName, User.LastName, User.FullName);
+
+                string sJSON = oSerializer.Serialize(OnlineUsers.Distinct());
+
+                Clients.Caller.onConnected(id,sJSON, CurrentMessage);
+
+                Clients.AllExcept(id).onNewUserConnected(objcu);
             }
+        }
+        public override Task OnConnected()
+        {
+            return base.OnConnected();
         }
         public void SendMessageToAll(string userName, string message,string Email)
         {
@@ -59,8 +69,8 @@ namespace KnowCostWeb
 
             string fromUserId = Context.ConnectionId;
 
-            var toUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == toUserId);
-            var fromUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == fromUserId);
+            var toUser = OnlineUsers.FirstOrDefault(x => x.ConnectionId == toUserId);
+            var fromUser = OnlineUsers.FirstOrDefault(x => x.ConnectionId == fromUserId);
 
             if (toUser != null && fromUser != null)
             {
@@ -74,10 +84,10 @@ namespace KnowCostWeb
         }
         public override Task OnDisconnected(bool stopCalled)
         {
-            var item = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
+            var item = OnlineUsers.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
             if (item != null)
             {
-                ConnectedUsers.Remove(item);
+                OnlineUsers.Remove(item);
 
                 var id = Context.ConnectionId;
                 Clients.All.onUserDisconnected(id, item.UserName);
