@@ -1,28 +1,20 @@
-﻿using AspNet.Identity.MongoDB;
-using KnowCostWeb.ApiModels;
+﻿using KnowCostWeb.ApiModels;
 using KnowCostWeb.Models;
-using KnowCostWeb.MongoUtilities;
 using Microsoft.AspNet.Identity;
-using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
-//using System.Web;
 using System.Web.Http;
-using Microsoft.Owin.Host.SystemWeb;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.Security.Claims;
+using MongoDB.Bson;
 
 namespace KnowCostWeb.Api
 {
 
     public class AccountController : ApiController
     {
-
         private ApplicationUserManager _userManager;
         public AccountController()
         {
@@ -31,7 +23,6 @@ namespace KnowCostWeb.Api
         public AccountController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
-            //SignInManager = signInManager;
         }
         public ApplicationUserManager UserManager
         {
@@ -70,6 +61,9 @@ namespace KnowCostWeb.Api
                     {
                         UserName = model.Email,
                         Email = model.Email,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        FullName = model.FirstName + " " + model.LastName,
                         UserProfile = new UserProfile
                         {
                             FirstName = model.FirstName,
@@ -79,8 +73,10 @@ namespace KnowCostWeb.Api
 
                     };
                     var result = await UserManager.CreateAsync(user, model.Password);
+
                     if (result.Succeeded)
                     {
+
                         if (model.SendEmail)
                         {
                             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -96,13 +92,16 @@ namespace KnowCostWeb.Api
                             {
                                 case SignInStatus.Success:
                                     response.SignInStatus = 1;
+                                    // Add User Claims for full name. You can check for the success of addition 
+                                    await UserManager.AddClaimAsync(user.Id, new Claim("FirstName", user.UserProfile.FirstName));
+                                    await UserManager.AddClaimAsync(user.Id, new Claim("LastName", user.UserProfile.LastName));
                                     RedirectToRoute("Chat_default", new { Status = 1 });
                                     return response;
                                 case SignInStatus.LockedOut:
                                     response.SignInStatus = 2;
                                     response.ErrorString = "Your account is lockedout please contact administrator";
                                     return response;
-                                   
+
                                 case SignInStatus.RequiresTwoFactorAuthentication:
                                     response.SignInStatus = 3;
                                     response.ErrorString = "Your account requires TwoFactorAuthentication please contact administrator";
@@ -120,7 +119,7 @@ namespace KnowCostWeb.Api
                     else
                     {
                         string retErro = "";
-                        foreach(string str in result.Errors)
+                        foreach (string str in result.Errors)
                         {
                             retErro += str + "\n";
                         }
@@ -184,7 +183,7 @@ namespace KnowCostWeb.Api
                         return response;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -211,7 +210,7 @@ namespace KnowCostWeb.Api
             }
         }
 
-       
+
 
         internal class ChallengeResult : System.Web.Mvc.HttpUnauthorizedResult
         {

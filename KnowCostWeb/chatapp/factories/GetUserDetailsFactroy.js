@@ -9,7 +9,6 @@
         .success(function (response) {
             console.log(deferedObj);
             deferedObj.resolve({ success: true, Id: 1,response:response});
-            //localStorageService.set("loggedUser", response);
         })
          .error(function () {
              deferedObj.resolve({ success: false, Id: -1 });

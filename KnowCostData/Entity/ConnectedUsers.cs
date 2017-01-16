@@ -17,5 +17,8 @@ namespace KnowCostData.Entity
         [BsonDateTimeOptions]
         public DateTime ConnectedTime { get; set; }
         public ObjectId UserID { get; set; }
+        public string IsActive { get; set; }
+        [BsonTimeSpanOptions(BsonType.Timestamp)]
+        public TimeSpan IdleTime { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using KnowCostData.Repository;
+﻿using BusinessService.Services;
+using KnowCostWeb.Helpers;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Owin;
@@ -12,10 +13,13 @@ namespace KnowCostWeb
         {
             GlobalHost.DependencyResolver.Register(
            typeof(ChatAppHub),
-           () => new ChatAppHub(new ChatRepository(),new UserRepository()));
-         
-            app.MapSignalR();
+           () => new ChatAppHub(new UserService()));
+            var idProvider = new CustomUserIdProvider();
+            GlobalHost.DependencyResolver.Register(typeof(IUserIdProvider), () => idProvider);          
+
+            
             ConfigureAuth(app);
+            app.MapSignalR();
 
 
         }

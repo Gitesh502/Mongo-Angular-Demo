@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace KnowCostWeb.Helpers
 {
-    public interface IUserIdProvider
-    {
-        string GetUserId(IRequest request);
-    }
+    //public interface IUserIdProvider
+    //{
+    //    string GetUserId(IRequest request);
+    //}
 }

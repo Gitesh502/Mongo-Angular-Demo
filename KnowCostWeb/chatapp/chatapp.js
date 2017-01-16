@@ -1,5 +1,5 @@
-﻿var chatapp = angular.module('chatapp', ['ngDialog', 'toaster', 'ngAnimate', 'angular-web-notification']).filter('unique', function () {
-
+﻿var chatapp = angular.module('chatapp', ['ngDialog', 'toaster', 'ngAnimate', 'angular-web-notification', 'ui.grid','ui.grid.edit','ui.grid.autoResize','ng-backstretch'])
+    .filter('unique', function () {
     return function (items, filterOn) {
 
         if (filterOn === false) {
@@ -52,6 +52,8 @@
 //    }
 //});
 chatapp.controller('ChatController', ChatController);
-chatapp.directive('ShowNotification', ShowNotification);
-//chatapp.directive('ngSlideDown', ngSlideDown);
+chatapp.controller('ProfileController', ProfileController);
+chatapp.factory('DesktopNotificationsFactory', DesktopNotificationsFactory);
+chatapp.factory('UserFactory', UserFactory);
+
 

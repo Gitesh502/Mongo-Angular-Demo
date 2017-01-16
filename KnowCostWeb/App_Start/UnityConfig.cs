@@ -1,9 +1,11 @@
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using Unity.Mvc5;
-using KnowCostData.Repository;
+
 using System.Web.Http;
 using KnowCostWeb.Controllers;
+using BusinessService.Services;
+using KnowCostWeb.Helpers;
 
 namespace KnowCostWeb
 {
@@ -24,8 +26,8 @@ namespace KnowCostWeb
 
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType<AccountController>(new InjectionConstructor());
-            container.RegisterType<IUserRepository, UserRepository>();
-            container.RegisterType<IChatRepository, ChatRepository>();
+            container.RegisterType<CustomUserIdProvider>(new InjectionConstructor());
+            container.RegisterType<IUserService, UserService>();
             //DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             //GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
             return container;

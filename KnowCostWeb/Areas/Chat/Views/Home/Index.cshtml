@@ -1,144 +1,147 @@
-﻿@using Microsoft.AspNet.Identity;
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 <link href="~/Content/css/Chat.css" rel="stylesheet" />
 <link href="~/Content/css/PrivateChat.css" rel="stylesheet" />
 
 <script src="~/chatapp/ChatJquery.js"></script>
-<div class="row">&nbsp;</div>
+<link href="~/Content/css/VScroll.css" rel="stylesheet" />
+<style>
+    .grid {
+        width: 100%;
+    }
+</style>
 
-<div  ng-controller="ChatController " ng-init="init();">
-    <input type="hidden" value="@User.Identity.Name" ng-model="name" id="hdnUserName" />
-    <input type="hidden" value="@User.Identity.GetUserId()" ng-model="name" id="hdnUserId" />
-    <div class="row">
-        <div class="col-md-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading" ng-model="userConnectionId" rel="{{userConnectionId}}">
-                    ONLINE USERS
+
+<div ng-controller="ChatController " ng-init="init();">
+    @Html.Partial("_OnlineUsers")
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="active">Dashboard</li>
+                </ul><!-- /.breadcrumb -->
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+                        <span class="input-icon">
+                            <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off">
+                            <i class="ace-icon fa fa-search nav-search-icon"></i>
+                        </span>
+                    </form>
+                </div><!-- /.nav-search -->
+            </div>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="widget-box">
+                            <div class="widget-header">
+                                <h4 class="widget-title lighter smaller">
+                                    <i class="ace-icon fa fa-comment blue"></i>
+                                    Conversation
+                                </h4>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main no-padding">
+                                    <div class="dialogs ace-scroll">
+                                        <div class="scroll-track scroll-active" style="display: block; height: 300px;"><div class="scroll-bar" style="height: 236px; top: 64px;"></div></div><div class="scroll-content" style="max-height: 300px;">
+                                            <div class="itemdiv dialogdiv" ng-repeat="msg in messages track by $index">
+                                                <div class="user">
+                                                    <img alt="Alexa's Avatar" src="~/assets/images/avatars/avatar1.png">
+                                                </div>
+                                                <div class="body">
+                                                    <div class="time">
+                                                        <i class="ace-icon fa fa-clock-o"></i>
+                                                        <span class="green">4 sec</span>
+                                                    </div>
+                                                    <div class="name">
+                                                        <a href="#">{{msg.username}}</a>
+                                                    </div>
+                                                    <div class="text">{{msg.message}}</div>
+                                                    <div class="tools">
+                                                        <a href="#" class="btn btn-minier btn-info">
+                                                            <i class="icon-only ace-icon fa fa-share"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <form>
+                                        <div class="form-actions">
+                                            <div class="input-group">
+                                                <input placeholder="Type your message here ..." type="text" class="form-control" name="message" ng-model="groupMsg">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-sm btn-info no-radius" type="button" ng-click="sendGroupMsg()">
+                                                        <i class="ace-icon fa fa-share"></i>
+                                                        Send
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div><!-- /.widget-main -->
+                            </div><!-- /.widget-body -->
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body" style="height:500px;">
-                    <ul class="media-list chat"  id="userList">
-                        <li class="media"  ng-repeat="x in OnlineUsers track by $index" >
-                            <div class="media-body">
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png">
-                                    </a>
-                                    <div class="media-body" >
-                                        <h5 rel="{{x.ConnectionId}}"><a ng-click="openInPrivate(x.UserName,x.Email,x.ConnectionId)">{{x.UserName}}</a></h5>
-                                        <small class="text-muted">Active From 3 hours</small>
+                <div class="privateChatBox row">
+                    <div style="position:fixed">
+                        <div ng-repeat="x in privateChatBoxes track by $index" ng-show="privateChatBoxProperties.showPrivateBox">
+                            <div class="row chat-window col-xs-5 col-md-4 privateChatWindow" ng-style="$index<=2?{'left':($index)*425}:{'left':0*425}" style="margin-left:10px;">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading top-bar">
+                                            <div class="col-md-8 col-xs-8">
+                                                <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> {{x.Uname}}</h3>
+                                            </div>
+                                            <div class="col-md-4 col-xs-4" style="text-align: right;">
+                                                <a href="#"><span id="minim_chat_window" class="head glyphicon glyphicon-minus icon_minim"></span></a>
+                                                <a href="#"><span class="glyphicon glyphicon-remove icon_close" ng-click="closePrivateChat(x.Uname,x.connectionId);"></span></a>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body msg_container_base slide">
+                                            <div class="row msg_container base_sent" ng-class="(msg.from == UserInPrivateChat.name)?'row msg_container base_receive':'row msg_container base_sent'" ng-repeat="msg in PrivateMessages | filter:({to: UserInPrivateChat.ConnectionId}) track by $index">
+                                                <div class="col-md-2 col-xs-2 avatar" ng-if="msg.from == UserInPrivateChat.name">
+                                                    <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
+                                                </div>
+                                                <div class="col-md-10 col-xs-10">
+                                                    <div ng-class="(msg.from == UserInPrivateChat.name)?'messages msg_receive':'messages msg_sent'">
+                                                        <p>
+                                                            {{msg.message}}
+                                                        </p>
+                                                        <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 col-xs-2 avatar" ng-if="msg.from != UserInPrivateChat.name">
+                                                    <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="input-group">
+                                                <input autofocus type="text" ng-model="privateBoxMessage.pMessage" class="form-control input-sm" />
+                                                <span class="input-group-btn">
+                                                    <input type="button" class="btn btn-primary btn-sm" ng-click="sendPrivateMessage(x.connectionId,x.name);" value="Send" />
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </li >
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-5">
-            <div class="panel panel-primary">
-                <div class="panel-heading" id="accordion">
-                    <span class="glyphicon glyphicon-comment"></span><span style="vertical-align:text-bottom"> @User.Identity.Name</span>
-                    <div class="btn-group pull-right hide">
-                        <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            <span class="glyphicon glyphicon-chevron-down"></span>
-                        </a>
-                    </div>
-                </div>
-                <div class="panel-collapse collapse out" id="collapseOne" style="display:block">
-                    <div class="panel-body">
-                        <ul class="chat">
-                            <li ng-class="{'right clearfix': msg.email==email,'left clearfix':msg.email!=email}"  ng-repeat="msg in messages track by $index">
-                                <span  ng-class="{'chat-img pull-right': msg.email==email,'chat-img pull-left':msg.email!=email}">
-                                    <img ng-if="msg.email!=email" src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                                    <img ng-if="msg.email==email" src="http://placehold.it/50/55C1E7/fff&text=Me" alt="User Avatar" class="img-circle" />
-                                </span>
-                                <div class="chat-body clearfix">
-                                    <div class="header">
-                                        <strong class="primary-font" ng-class="{'pull-right primary-font': msg.email==email,'primary-font':msg.email!=email}">{{msg.username}}</strong>
-                                         <small  ng-class="{'text-muted': msg.email==email,'pull-right text-muted':msg.email!=email}">
-                                            <span class="glyphicon glyphicon-time"></span>12 mins ago
-                                        </small>
-                                    </div>
-                                    <p>
-                                      {{msg.message}}
-                                    </p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="input-group">
-                            <input id="btn-input" type="text" ng-model="groupMsg" class="form-control input-sm" placeholder="Type your message here..." />
-                            <span class="input-group-btn">
-                                <button class="btn btn-warning btn-sm" id="btn-chat" ng-click="sendGroupMsg()">
-                                    Send
-                                </button>
-                            </span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            
         </div>
     </div>
 
-    
-    @*ng-show="showPrivateBox"*@
-    @*id="chat_window_1"*@
-        <div class="privateChatBox row" >
-            <div style="position:fixed">
-                <div ng-repeat="x in privateChatBoxes track by $index" >
-                    <div class="row chat-window col-xs-5 col-md-4 privateChatWindow"  ng-style="$index<=2?{'left':($index)*425}:{'left':0*425}" style="margin-left:10px;">
-                        <div class="col-xs-12 col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading top-bar">
-                                    <div class="col-md-8 col-xs-8">
-                                        <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> {{x.Uname}}</h3>
-                                    </div>
-                                    <div class="col-md-4 col-xs-4" style="text-align: right;">@*widgetExpanded = !widgetExpanded*@
-                                        <a href="#"><span id="minim_chat_window"   class="head glyphicon glyphicon-minus icon_minim"></span></a>
-                                        <a href="#"><span class="glyphicon glyphicon-remove icon_close" data-id="chat_window_1"></span></a>
-                                    </div>
-                                </div>
-                                <div class="panel-body msg_container_base slide">@*ng-slide-down="widgetExpanded" lazy-render duration="0.8"*@
-                                    <div class="row msg_container base_sent" ng-class="(msg.from == UserInPrivateChat.name)?'row msg_container base_receive':'row msg_container base_sent'" ng-repeat="msg in PrivateMessages | filter:({to: UserInPrivateChat.ConnectionId}) track by $index">
-                                        <div class="col-md-2 col-xs-2 avatar" ng-if="msg.from == UserInPrivateChat.name">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
-                                        </div>
-                                          <div class="col-md-10 col-xs-10">
-                                            <div   ng-class="(msg.from == UserInPrivateChat.name)?'messages msg_receive':'messages msg_sent'">
-                                                <p>
-                                                   {{msg.message}}
-                                                </p>
-                                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2 col-xs-2 avatar" ng-if="msg.from != UserInPrivateChat.name">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
-                                        </div>
-                                    </div>
 
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="input-group">
-                                        <input  type="text" ng-model="privateBoxMessage.pMessage"   class="form-control input-sm" />
-                                        <span class="input-group-btn">
-                                            <input type="button" class="btn btn-primary btn-sm" ng-click="sendPrivateMessage(x.connectionId,x.name);"  value="Send" />
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
 
-    
-    
+
+
+
 </div>

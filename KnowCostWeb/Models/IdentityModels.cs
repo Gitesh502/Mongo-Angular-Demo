@@ -15,10 +15,16 @@ namespace KnowCostWeb.Models
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            userIdentity.AddClaim(new Claim("FirstName", this.FirstName.ToString()));
+            userIdentity.AddClaim(new Claim("LastName", this.LastName.ToString()));
+            userIdentity.AddClaim(new Claim("FullName", this.FullName.ToString()));
             // Add custom user claims here
             return userIdentity;
         }
-
+      
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FullName { get; set; }
         public virtual UserProfile UserProfile { get; set; }
     }
     public class UserProfile

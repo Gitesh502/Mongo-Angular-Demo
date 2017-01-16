@@ -1,4 +1,4 @@
-﻿var LoginController = function ($scope, LoginFactory, $window, toaster,$controller) {
+﻿var LoginController = function ($scope, LoginFactory, $window,$controller) {
     $controller('CommonController', { $scope: $scope, $window: $window })
     $scope.UserLoginDetails = {
         Email: "",
@@ -11,28 +11,53 @@
         var result = LoginFactory($scope.UserLoginDetails);
         result.then(function (result) {
             console.log(result)
+            
             if (result.success) {
-                localStorage.setItem("loggedUser", angular.toJson(result.response));
+              
                 $window.location.href = '/Chat/Home/Index';
 
             } else {
                 switch (result.Id) {
                     case 2:
-                        toaster.pop('danger', "Error", "Your account is lockedout please contact administrator");
+                        var notify = {
+                            type: 'error',
+                            title: 'Error',
+                            content: 'Your account is lockedout please contact administrator',
+                            timeout: 5000 //time in ms
+                        };
+                        $scope.$emit('notify', notify);
                         break;
                     case 3:
-                        toaster.pop('danger', "Error", "Your account requires TwoFactorAuthentication please contact administrator");
+                        var notify = {
+                            type: 'error',
+                            title: 'Error',
+                            content: 'Your account requires TwoFactorAuthentication please contact administrator',
+                            timeout: 5000 //time in ms
+                        };
+                        $scope.$emit('notify', notify);
                         break;
                     case 0:
-                        toaster.pop({type: 'error',title:  "Error",body: "Invalid username or password"});
+                        var notify = {
+                            type: 'error',
+                            title: 'Error',
+                            content: 'Invalid username or password',
+                            timeout: 5000 //time in ms
+                         };
+                         $scope.$emit('notify', notify);
                         break;
                     default:
-                        toaster.pop('danger', "Error", "Invalid login attempt.");
+                       var  notify = {
+                            type: 'error',
+                            title: 'Error',
+                            content: 'Invalid login attempt.',
+                            timeout: 5000 //time in ms
+                       };
+                       $scope.$emit('notify', notify);
                         break;
-
+                      
                 }
             }
         })
     }
 }
-LoginController.$inject = ['$scope', 'LoginFactory', '$window', 'toaster', '$controller'];
+LoginController.$inject = ['$scope', 'LoginFactory', '$window', '$controller'];

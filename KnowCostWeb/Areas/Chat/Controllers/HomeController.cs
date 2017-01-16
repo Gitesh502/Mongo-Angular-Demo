@@ -31,5 +31,10 @@ namespace KnowCostWeb.Areas.Chat.Controllers
             AuthenticationManager.SignOut();
             return RedirectToAction("Login", "Account");
         }
+
+        public ActionResult MyProfile()
+        {
+            return View();
+        }
     }
 }

@@ -1,25 +1,44 @@
 ﻿@using Microsoft.AspNet.Identity
+@using System.Security.Claims
+@using KnowCostWeb.Extensions
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-        @Html.AntiForgeryToken()
-
-        <ul class="nav navbar-nav navbar-right">
+    <form id="logoutForm" action="~/Account/LogOff" method="post" class="hide">@Html.AntiForgeryToken()</form>
+    <li class="light-blue dropdown-modal dropdown">
+        <a data-toggle="dropdown" href="#" class="dropdown-toggle" aria-expanded="false">
+            <img class="nav-user-photo" src="~/assets/images/avatars/user.jpg" alt="Jason's Photo">
+            <span class="user-info">
+                <small>Welcome,</small>
+                @User.Identity.GetFirstName()
+            </span>
+            <i class="ace-icon fa fa-caret-down"></i>
+        </a>
+        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
             <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                <a href="#">
+                    <i class="ace-icon fa fa-cog"></i>
+                    Settings
+                </a>
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li>
+                <a href="profile.html">
+                    <i class="ace-icon fa fa-user"></i>
+                    Profile
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">
+                    <i class="ace-icon fa fa-power-off"></i>
+                    Logout
+                </a>
+            </li>
         </ul>
-    }
+    </li>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        @*<li>
-            <a href="#/register" id="registerLink">Register</a>
-        </li>
-        <li>  <a href="#/login" id="loginLink">Login</a></li>*@
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>

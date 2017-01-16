@@ -1,4 +1,4 @@
-﻿var RegistrationController = function ($scope, RegistrationFactory, $controller, $window, toaster) {
+﻿var RegistrationController = function ($scope, RegistrationFactory, $controller, $window) {
     $controller('CommonController', {$scope:$scope,$window: $window})
     $scope.userDetails = {
         firstName: "",
@@ -17,15 +17,27 @@
         result.then(function (result) {
             console.log(result)
             if (result.success) {
-                toaster.pop('info', "Success", "Registration Successfull");
-               // localStorage.setItem("loggedUser", angular.toJson(result.response));
+                var notify = {
+                    type: 'success',
+                    title: 'success',
+                    content: 'Registration Successfull!',
+                    timeout: 5000 //time in ms
+                };
+                $scope.$emit('notify', notify);
                 $window.location.href = '/Chat/Home/Index';
 
             } else {
                 $scope.userDetails.registrationFailure = true;
-                toaster.pop({ type: 'error', title: "Error", body: "Error Occured" });
+                var notify = {
+                    type: 'error',
+                    title: 'Error',
+                    content: 'Error Occured',
+                    timeout: 5000 //time in ms
+                };
+                $scope.$emit('notify', notify);
+              
             }
         });
     }
 }
-RegistrationController.$inject = ['$scope', 'RegistrationFactory', '$controller', '$window', 'toaster'];
+RegistrationController.$inject = ['$scope', 'RegistrationFactory', '$controller', '$window'];
