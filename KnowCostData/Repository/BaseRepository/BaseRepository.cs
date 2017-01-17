@@ -22,6 +22,11 @@ namespace KnowCostData.Repository.BaseRepository
             obj = new MongoConnectionHandler<T>(typeof(T).Name);
             obj.MongoCollection.InsertOneAsync(entity);
         }
+        public virtual void AddMany(List<T> entity)
+        {
+            obj = new MongoConnectionHandler<T>(typeof(T).Name);
+            obj.MongoCollection.InsertManyAsync(entity);
+        }
         public virtual IEnumerable<T> GetMany(FilterDefinition<T> where)
         {
             obj = new MongoConnectionHandler<T>(typeof(T).Name);

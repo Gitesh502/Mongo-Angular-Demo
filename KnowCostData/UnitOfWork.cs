@@ -14,7 +14,7 @@ namespace KnowCostData
         
         private BaseRepository<users> _userRepository;
         private BaseRepository<ConnectedUsers> _connectedUserRepository;
-        //private BaseRepository<dynamic> _commonRepository;
+        private BaseRepository<ConnectionMappings> _connectionMappingRepository;
         public BaseRepository<users> UserRepository
         {
             get
@@ -33,15 +33,15 @@ namespace KnowCostData
                 return _connectedUserRepository;
             }
         }
-        //public BaseRepository<dynamic> ConnectedUserRepository
-        //{
-        //    get
-        //    {
-        //        //if (this._commonRepository == null)
-        //        //    this._commonRepository = new BaseRepository<users>();
-        //        return _commonRepository;
-        //    }
-        //}
+        public BaseRepository<ConnectionMappings> ConnectionMappingRepository
+        {
+            get
+            {
+                if (this._connectionMappingRepository == null)
+                    this._connectionMappingRepository = new BaseRepository<ConnectionMappings>();
+                return _connectionMappingRepository;
+            }
+        }
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {

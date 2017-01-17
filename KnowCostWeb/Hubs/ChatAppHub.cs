@@ -12,6 +12,7 @@ using Microsoft.Owin.Security;
 using BusinessService.Services;
 using Microsoft.AspNet.SignalR.Hubs;
 using System.Threading.Tasks;
+using BusinessEntities.BusinessEntityModels;
 
 namespace KnowCostWeb
 {
@@ -19,10 +20,11 @@ namespace KnowCostWeb
     public class ChatAppHub : Hub
     {
         static List<UserDetail> ConnectedUsers = new List<UserDetail>();
-        static List<ConnectedUsers> OnlineUsers = new List<ConnectedUsers>();
+        static List<ChatUtilities.ConnectedUsers> OnlineUsers = new List<ChatUtilities.ConnectedUsers>();
         static List<MessageDetail> CurrentMessage = new List<MessageDetail>();
         private readonly IUserService _iuserservices;
-        public ChatAppHub(IUserService IUserServices)
+        private readonly IConnectionMappingService _iConnectionMappingService;
+        public ChatAppHub(IUserService IUserServices,IConnectionMappingService IConnectionMappingService)
         {
             _iuserservices = IUserServices;
         }
@@ -34,7 +36,7 @@ namespace KnowCostWeb
             var currentconnectionId=Context.ConnectionId;
             if (ConnectedUsers.Count(x => x.ConnectionId == id) == 0)
             {
-                ConnectedUsers objcu = new ChatUtilities.ConnectedUsers();
+                ChatUtilities.ConnectedUsers objcu = new ChatUtilities.ConnectedUsers();
                 objcu.ConnectionId = id;
                 objcu.Email = User.Email;
                 objcu.UserName = User.UserName;
@@ -57,6 +59,14 @@ namespace KnowCostWeb
         }
         public override Task OnConnected()
         {
+            var id = Context.ConnectionId;
+            var userId = Context.User.Identity.GetUserId();
+            ConnectionMappingsEntity objCom = new ConnectionMappingsEntity();
+            objCom.ConnectionId = id;
+            objCom.UserId = userId;
+            objCom.IsActive = true;
+            objCom.ConnectedOn = DateTime.Now;
+            _iConnectionMappingService.SaveConnectionMapping(objCom);
             return base.OnConnected();
         }
         public void SendMessageToAll(string userName, string message,string Email)

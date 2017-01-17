@@ -238,6 +238,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiModels\ConnectionMappings.cs" />
     <Compile Include="ApiModels\Response\UserResponseModel.cs" />
     <Compile Include="ApiModels\UserDetailsModel.cs" />
     <Compile Include="Api\AccountController.cs" />
@@ -542,6 +543,7 @@
     <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ApiModels\Request\" />
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />

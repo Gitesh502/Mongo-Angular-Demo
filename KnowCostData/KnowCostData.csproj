@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Entity\AspNetUsers.cs" />
     <Compile Include="Entity\ConnectedUsers.cs" />
+    <Compile Include="Entity\ConnectionMappings.cs" />
     <Compile Include="Entity\IAspNetUsers.cs" />
     <Compile Include="Entity\IMongoEntity.cs" />
     <Compile Include="Entity\MongoConnectionHandler.cs" />

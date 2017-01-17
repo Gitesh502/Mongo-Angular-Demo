@@ -55,6 +55,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommonService\CommonService.cs" />
     <Compile Include="Services\CommonService\ICommonService.cs" />
+    <Compile Include="Services\ConnectionMappingsService\ConnectionMappingService.cs" />
+    <Compile Include="Services\ConnectionMappingsService\IConnectionMappingService.cs" />
     <Compile Include="Services\UserService\IUserService.cs" />
     <Compile Include="Services\UserService\UserService.cs" />
   </ItemGroup>
