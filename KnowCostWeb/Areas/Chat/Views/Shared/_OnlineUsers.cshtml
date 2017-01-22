@@ -28,14 +28,16 @@
         </div>
     </div><!-- /.sidebar-shortcuts -->
 
-    <ul class="nav nav-list" style="top: 0px;">
+    <ul class="nav nav-list" style="top: 0px;" ng-model="privateChatBoxProperties">
         <li class="" ng-repeat="x in OnlineUsers track by $index">
-            <a ng-click="privateChatBoxProperties.isboxopened || openInPrivate(x.UserName,x.Email,x.ConnectionId,x.FullName);">
+            <a ng-click="openInPrivate(this);">
                 <i class="menu-icon fa fa-user"></i>
                 @*<img class="media-object img-circle" style="max-height:40px;" src="~/Images/noimage.jpg">*@
-                <span class="menu-text"> {{x.FullName}} 
+                <span class="menu-text">
+                    {{x.FullName}}
                     <span class="badge badge-primary" ng-model="privateMessageCount" ng-if="privateMessageCount.userEmail==x.Email" ng-show="!privateMessageCount.isRead">{{privateMessageCount.messageCount}}</span>
                 </span>
+              
             </a>
 
             <b class="arrow"></b>
@@ -46,8 +48,8 @@
             </a>
             <b class="arrow"></b>
         </li>
-    @Html.Partial("_allRelatedUsers")
-       
+        @Html.Partial("_allRelatedUsers")
+
     </ul><!-- /.nav-list -->
 
     <div class="sidebar-toggle sidebar-collapse hide" id="sidebar-collapse ">

@@ -49,6 +49,7 @@ namespace BusinessService.Services
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<users, UsersEntity>();
                 cfg.CreateMap<UserProfile, UserProfileEntity>();
+
             });
             IMapper mapper = config.CreateMapper();
 

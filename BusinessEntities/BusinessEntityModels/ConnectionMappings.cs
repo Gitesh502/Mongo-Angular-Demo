@@ -12,5 +12,6 @@ namespace BusinessEntities.BusinessEntityModels
         public string ConnectionId { get; set; }
         public DateTime ConnectedOn { get; set; }
         public bool IsActive { get; set; }
+
     }
 }

@@ -12,8 +12,9 @@ namespace KnowCostWeb
         public void Configuration(IAppBuilder app)
         {
             GlobalHost.DependencyResolver.Register(
-           typeof(ChatAppHub),
-           () => new ChatAppHub(new UserService()));
+           typeof(ChatAppHub),() => new ChatAppHub(new UserService(),new  ConnectionMappingService(),new UserMessageService()));
+
+
             var idProvider = new CustomUserIdProvider();
             GlobalHost.DependencyResolver.Register(typeof(IUserIdProvider), () => idProvider);          
 

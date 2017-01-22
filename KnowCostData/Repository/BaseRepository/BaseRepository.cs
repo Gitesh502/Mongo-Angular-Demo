@@ -37,6 +37,7 @@ namespace KnowCostData.Repository.BaseRepository
             obj = new MongoConnectionHandler<T>(typeof(T).Name);
             return obj.MongoCollection.FindAsync(where).Result.FirstOrDefault();
         }
+
         
     }
 }

@@ -38,6 +38,9 @@
    
     <script src="~/assets/js/jquery-2.1.4.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/assets/js/ace-elements.min.js"></script>
+    <script src="~/assets/js/ace.min.js"></script>
+
     <link href="~/Plugins/Toastr/toaster.min.css" rel="stylesheet" />
     <link href="~/Plugins/Dialog/ngDialog.min.css" rel="stylesheet" />
     <link href="~/Plugins/Dialog/ngDialog-theme-default.min.css" rel="stylesheet" />
@@ -124,3 +127,8 @@
 <script src="~/chatapp/controllers/ProfileController.js"></script>
 <script src="~/chatapp/chatapp.js"></script>
 
+<script>
+    $('.dialogs').ace_scroll({
+        size: 300
+    });
+</script>

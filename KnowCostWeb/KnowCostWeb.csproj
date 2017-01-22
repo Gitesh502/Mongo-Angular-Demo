@@ -243,6 +243,7 @@
     <Compile Include="ApiModels\UserDetailsModel.cs" />
     <Compile Include="Api\AccountController.cs" />
     <Compile Include="Api\UserController.cs" />
+    <Compile Include="Api\UserMessageController.cs" />
     <Compile Include="App_Start\ApplicationIdentityContext.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\EnsureAuthIndexes.cs" />

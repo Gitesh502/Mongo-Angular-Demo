@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+@using System.Security.Claims
+@using KnowCostWeb.Extensions
+@{
     ViewBag.Title = "Index";
 }
 <link href="~/Content/css/Chat.css" rel="stylesheet" />
@@ -46,11 +49,12 @@
                             </div>
                             <div class="widget-body">
                                 <div class="widget-main no-padding">
-                                    <div class="dialogs ace-scroll">
-                                        <div class="scroll-track scroll-active" style="display: block; height: 300px;"><div class="scroll-bar" style="height: 236px; top: 64px;"></div></div><div class="scroll-content" style="max-height: 300px;">
+                                    <div class="dialogs">
+                                       
+                                      
                                             <div class="itemdiv dialogdiv" ng-repeat="msg in messages track by $index">
                                                 <div class="user">
-                                                    <img alt="Alexa's Avatar" src="~/assets/images/avatars/avatar1.png">
+                                                    <img alt="Alexa's Avatar" src="~/assets/images/avatars/avatar4.png">
                                                 </div>
                                                 <div class="body">
                                                     <div class="time">
@@ -58,7 +62,7 @@
                                                         <span class="green">4 sec</span>
                                                     </div>
                                                     <div class="name">
-                                                        <a href="#">{{msg.firstName}}</a>
+                                                        <a href="#">{{msg.fullName}}</a>
                                                     </div>
                                                     <div class="text">{{msg.message}}</div>
                                                     <div class="tools">
@@ -68,11 +72,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                     
                                     </div>
                                     <form>
                                         <div class="form-actions">
-                                            <div class="input-group">
+                                            <div class="input-group" style="z-index:0">
                                                 <input placeholder="Type your message here ..." type="text" class="form-control" name="message" ng-model="groupMsg">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-sm btn-info no-radius" type="button" ng-click="sendGroupMsg()">
@@ -90,10 +94,10 @@
                 </div>
                 <div class="privateChatBox row">
                     <div style="position:fixed">
-                        <div ng-repeat="x in privateChatBoxes track by $index" ng-show="privateChatBoxProperties.showPrivateBox">
+                        <div ng-repeat="x in privateChatBoxes track by $index">
                             <div class="row chat-window col-xs-5 col-md-4 privateChatWindow" ng-style="$index<=2?{'right':($index)*425}:{'right':0*425}" style="margin-left:10px;">
                                 <div class="col-xs-12 col-md-12">
-                                    <div class="panel panel-default">
+                                    @*<div class="panel panel-default">
                                         <div class="panel-heading top-bar">
                                             <div class="col-md-8 col-xs-8">
                                                 <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> {{x.FullName}}</h3>
@@ -129,6 +133,59 @@
                                                 </span>
                                             </div>
                                         </div>
+                                    </div>*@
+
+                                    <div class="widget-box">
+                                        <div class="widget-header">
+                                            <h4 class="widget-title lighter smaller">
+                                                <i class="ace-icon fa fa-comment blue"></i>
+                                               {{x.FullName}}
+                                            </h4>
+                                            <div class="col-md-4 col-xs-4" style="text-align: right;float:right;padding-right:10px;padding-top:9px">
+                                                <a href="#"><span id="minim_chat_window" class="head glyphicon glyphicon-minus icon_minim"></span></a>
+                                                <a href="#"><span class="glyphicon glyphicon-remove icon_close" ng-click="closePrivateChat(x.Uname,x.connectionId);"></span></a>
+                                            </div>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <div class="dialogs">
+                                                    <div class="itemdiv dialogdiv" ng-repeat="msg in PrivateMessages | filter:({to: x.connectionId}) track by $index">
+                                                        <div class="user">
+                                                            <img alt="Alexa's Avatar" src="~/assets/images/avatars/avatar4.png">
+                                                        </div>
+                                                        <div class="body">
+                                                            <div class="time">
+                                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                                <span class="green">4 sec</span>
+                                                            </div>
+                                                            <div class="name">
+                                                                <a href="#">{{msg.fullName}}</a>
+                                                            </div>
+                                                            <div class="text">{{msg.message}}</div>
+                                                            <div class="tools">
+                                                                <a href="#" class="btn btn-minier btn-info">
+                                                                    <i class="icon-only ace-icon fa fa-share"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <form>
+                                                    <div class="form-actions">
+                                                        <div class="input-group">
+                                                            <input placeholder="Type your message here ..." type="text" class="form-control" name="message" ng-model="privateBoxMessage.pMessage">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-sm btn-info no-radius" type="button" ng-click="sendPrivateMessage(x);">
+                                                                    <i class="ace-icon fa fa-share"></i>
+                                                                    Send
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div><!-- /.widget-main -->
+                                        </div><!-- /.widget-body -->
                                     </div>
                                 </div>
                             </div>

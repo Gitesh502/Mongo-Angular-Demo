@@ -72,6 +72,8 @@
     <Compile Include="Entity\IMongoEntity.cs" />
     <Compile Include="Entity\MongoConnectionHandler.cs" />
     <Compile Include="Entity\MongoEntity.cs" />
+    <Compile Include="Entity\UserMessages.cs" />
+    <Compile Include="Helper\FetchDBRef.cs" />
     <Compile Include="Models\ChatModel.cs" />
     <Compile Include="Models\UserDetailsDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

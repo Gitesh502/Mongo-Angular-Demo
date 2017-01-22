@@ -14,7 +14,7 @@ namespace KnowCostData.Entity
 
             //// Get a reference to a server object from the Mongo client object
             const string databaseName = "KnowCost";
-            var mongoServer = mongoClient.GetDatabase(databaseName);
+            IMongoDatabase mongoServer = mongoClient.GetDatabase(databaseName);
 
             //// Get a reference to the "retrogamesweb" database object 
             //// from the Mongo server object

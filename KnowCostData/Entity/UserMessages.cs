@@ -1,0 +1,39 @@
+﻿using KnowCostData.Helper;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KnowCostData.Entity
+{
+    [BsonIgnoreExtraElements]
+    public class UserMessages : MongoEntity
+    {
+        public string UserId { get; set; }
+        public string MessageId{get;set;}
+        public string MessageDescription{get;set;}
+        public bool isPrivate{get;set;}
+        public string fromUserId{get;set;}
+        public List<string> toUserId{get;set;}
+        [BsonDateTimeOptions]
+        public DateTime MessageOn{get;set;}
+        public bool IsRead{get;set;}
+        public users relusers { get; set; }
+        public MongoDBRef users { get; set; }
+        public users GetUsers(IMongoDatabase db)
+        {
+            if (users==null)
+                return new users();
+
+            users tpass = new users();
+            tpass= db.FetchDBRef<users>(users);
+            return  tpass;
+        }
+    }
+
+   
+}

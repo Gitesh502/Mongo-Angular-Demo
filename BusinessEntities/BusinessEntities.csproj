@@ -52,8 +52,12 @@
   <ItemGroup>
     <Compile Include="BusinessEntityModels\ConnectedUsers.cs" />
     <Compile Include="BusinessEntityModels\ConnectionMappings.cs" />
+    <Compile Include="BusinessEntityModels\UserMessages.cs" />
     <Compile Include="BusinessEntityModels\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

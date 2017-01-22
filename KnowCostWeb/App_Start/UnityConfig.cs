@@ -28,6 +28,7 @@ namespace KnowCostWeb
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<CustomUserIdProvider>(new InjectionConstructor());
             container.RegisterType<IUserService, UserService>();
+            container.RegisterType<IUserMessageService, UserMessageService>();
             //DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             //GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
             return container;

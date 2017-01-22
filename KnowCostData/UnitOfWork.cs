@@ -15,6 +15,7 @@ namespace KnowCostData
         private BaseRepository<users> _userRepository;
         private BaseRepository<ConnectedUsers> _connectedUserRepository;
         private BaseRepository<ConnectionMappings> _connectionMappingRepository;
+        private BaseRepository<UserMessages> _UserMessageRepository;
         public BaseRepository<users> UserRepository
         {
             get
@@ -40,6 +41,15 @@ namespace KnowCostData
                 if (this._connectionMappingRepository == null)
                     this._connectionMappingRepository = new BaseRepository<ConnectionMappings>();
                 return _connectionMappingRepository;
+            }
+        }
+        public BaseRepository<UserMessages> UserMessageRepositroy
+        {
+            get
+            {
+                if (this._UserMessageRepository == null)
+                    this._UserMessageRepository = new BaseRepository<UserMessages>();
+                return _UserMessageRepository;
             }
         }
         private bool disposed = false;
