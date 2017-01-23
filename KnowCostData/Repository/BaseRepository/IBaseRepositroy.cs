@@ -13,5 +13,7 @@ namespace KnowCostData.Repository.BaseRepository
         void Add(T entity);
         IEnumerable<T> GetMany(FilterDefinition<T> where);
         T GetOne(FilterDefinition<T> where);
+        T GetSingleReference(MongoDBRef refObj);
+        IEnumerable<T> GetManyReference(MongoDBRef refObj);
     }
 }

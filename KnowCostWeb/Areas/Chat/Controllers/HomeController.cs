@@ -5,6 +5,8 @@ using System.Linq;
 
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using BusinessService.Services;
 
 namespace KnowCostWeb.Areas.Chat.Controllers
 {
@@ -12,10 +14,15 @@ namespace KnowCostWeb.Areas.Chat.Controllers
     public class HomeController : Controller
     {
         // GET: Chat/Home
-
+        private readonly IUserMessageService _iUserMessageService;
+        public HomeController()
+        {
+            _iUserMessageService = new UserMessageService();
+        }
         public ActionResult Index()
         {
-            return View();
+            var lstData = _iUserMessageService.GetMessagesByUserId(User.Identity.GetUserId());
+            return View(lstData);
         }
         private IAuthenticationManager AuthenticationManager
         {

@@ -1,4 +1,5 @@
 ﻿using KnowCostData.Entity;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,17 @@ namespace KnowCostData.Repository.BaseRepository
             obj = new MongoConnectionHandler<T>(typeof(T).Name);
             return obj.MongoCollection.FindAsync(where).Result.FirstOrDefault();
         }
+        public virtual T GetSingleReference(MongoDBRef refObj)
+        {
+            obj = new MongoConnectionHandler<T>(refObj.CollectionName);
+            return obj.MongoCollection.FindAsync(Builders<T>.Filter.Eq(e=>e.Id, refObj.Id.AsObjectId)).Result.FirstOrDefault();
+        }
+        public virtual IEnumerable<T> GetManyReference(MongoDBRef refObj)
+        {
+            obj = new MongoConnectionHandler<T>(refObj.CollectionName);
+            return obj.MongoCollection.FindAsync(Builders<T>.Filter.Eq("_id", ObjectId.Parse(refObj.Id.AsString))).Result.ToList();
+        }
 
-        
+
     }
 }

@@ -11,5 +11,6 @@ namespace BusinessService.Services
     {
         bool SaveUserMessages(UserMessagesEntity UserMessages);
         IEnumerable<UserMessagesEntity> GetMessages();
+        IEnumerable<UserMessagesEntity> GetMessagesByUserId(string UserId);
     }
 }

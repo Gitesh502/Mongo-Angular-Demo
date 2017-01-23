@@ -24,15 +24,15 @@ namespace KnowCostData.Entity
         public bool IsRead{get;set;}
         public users relusers { get; set; }
         public MongoDBRef users { get; set; }
-        public users GetUsers(IMongoDatabase db)
-        {
-            if (users==null)
-                return new users();
+        //public users getusers(imongodatabase db)
+        //{
+        //    if (users == null)
+        //        return new users();
 
-            users tpass = new users();
-            tpass= db.FetchDBRef<users>(users);
-            return  tpass;
-        }
+        //    users tpass = new users();
+        //    tpass = db.fetchdbref<users>(users);
+        //    return tpass;
+        //}
     }
 
    
