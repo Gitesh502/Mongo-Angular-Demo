@@ -142,7 +142,6 @@ namespace KnowCostWeb
                 ume.fromUserId = fromUserId;
                 ume.toUserId = PrivateMessages;
                 ume.IsRead = false;
-                ume.user = new MongoDB.Driver.MongoDBRef("users", fromUserId);
                 SaveMessageDetails(ume);
             }
 

@@ -29,8 +29,8 @@ namespace BusinessService.Services
                 cfg.CreateMap<UserProfileEntity, UserProfile>();
                 cfg.CreateMap<UsersEntity, users>()
                .ForMember(a => a.UserProfile, opt => opt.MapFrom(s => s.UserProfile));
-                cfg.CreateMap<UserMessagesEntity, UserMessages>()
-                     .ForMember(a => a.users, opt => opt.MapFrom(s => s.user));
+                cfg.CreateMap<UserMessagesEntity, UserMessages>();
+                     //.ForMember(a => a.users, opt => opt.MapFrom(s => s.user));
 
 
             });
@@ -48,7 +48,7 @@ namespace BusinessService.Services
             var document2Lookup = listUsers.AsQueryable().ToLookup(x => x.Id);
             foreach (var document1 in lstMsgs.AsQueryable())
             {
-                document1.relusers = document2Lookup[ObjectId.Parse(document1.users.Id.ToString())].FirstOrDefault();
+                document1.fromUser = document2Lookup[ObjectId.Parse(document1.users.Id.ToString())].FirstOrDefault();
                 //yield return document1;
             }
 
@@ -58,8 +58,8 @@ namespace BusinessService.Services
                 cfg.CreateMap<UserProfile, UserProfileEntity>();
                 cfg.CreateMap<users, UsersEntity>()
                      .ForMember(a => a.UserProfile, opt => opt.MapFrom(s => s.UserProfile));
-                cfg.CreateMap<UserMessages, UserMessagesEntity>()
-                     .ForMember(a => a.user, opt => opt.MapFrom(s => s.users));
+                cfg.CreateMap<UserMessages, UserMessagesEntity>();
+                     //.ForMember(a => a.user, opt => opt.MapFrom(s => s.users));
                    
 
 
@@ -80,7 +80,7 @@ namespace BusinessService.Services
             var document2Lookup = listUsers.AsQueryable().ToLookup(x => x.Id);
             foreach (var document1 in lstMsgs.AsQueryable())
             {
-                document1.relusers = document2Lookup[ObjectId.Parse(document1.fromUserId.ToString())].FirstOrDefault();
+                document1.fromUser = document2Lookup[ObjectId.Parse(document1.fromUserId.ToString())].FirstOrDefault();
                 //yield return document1;
             }
 
@@ -95,8 +95,8 @@ namespace BusinessService.Services
                 cfg.CreateMap<UserProfile, UserProfileEntity>();
                 cfg.CreateMap<users, UsersEntity>()
                      .ForMember(a => a.UserProfile, opt => opt.MapFrom(s => s.UserProfile));
-                cfg.CreateMap<UserMessages, UserMessagesEntity>()
-                     .ForMember(a => a.user, opt => opt.MapFrom(s => s.users));
+                cfg.CreateMap<UserMessages, UserMessagesEntity>();
+                     //.ForMember(a => a.user, opt => opt.MapFrom(s => s.users));
 
 
 

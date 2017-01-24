@@ -22,7 +22,8 @@ namespace KnowCostData.Entity
         [BsonDateTimeOptions]
         public DateTime MessageOn{get;set;}
         public bool IsRead{get;set;}
-        public users relusers { get; set; }
+        public users fromUser { get; set; }
+        public List<users> toUser { get; set; }
         public MongoDBRef users { get; set; }
         //public users getusers(imongodatabase db)
         //{

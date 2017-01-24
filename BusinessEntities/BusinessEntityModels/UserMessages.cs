@@ -16,8 +16,8 @@ namespace BusinessEntities.BusinessEntityModels
         public List<string> toUserId { get; set; }
         public DateTime MessageOn{get;set;}
         public bool IsRead{get;set;}
-        public MongoDBRef user { get; set; }
-        public UsersEntity relusers { get; set; }
+        public UsersEntity fromUser { get; set; }
+        public List<UsersEntity> toUser { get; set; }
     }
     
    
