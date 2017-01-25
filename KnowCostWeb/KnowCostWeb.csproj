@@ -419,7 +419,7 @@
     <Content Include="chatapp\controllers\ChatController.js" />
     <Content Include="chatapp\controllers\ProfileController.js" />
     <Content Include="chatapp\factories\GetUserDetailsFactroy.js" />
-    <Content Include="chatapp\factories\ManageMessages.js" />
+    <Content Include="chatapp\factories\ManageMessagesFactory.js" />
     <Content Include="CommonApp\Factories\DesktopNotificationsFactory.js" />
     <Content Include="CommonApp\Factories\UserFactory.js" />
     <Content Include="Content\bootstrap.css" />

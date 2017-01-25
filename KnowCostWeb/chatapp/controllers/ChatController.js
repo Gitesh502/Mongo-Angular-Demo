@@ -113,7 +113,9 @@
             console.log('An error occurred: ' + err);
         });
     }
-
+    $scope.getMessagesByToUserId = function () {
+        var result = UserFactory.GetUserByEmail($scope.email);
+    }
     $scope.getLoggedUser = function () {
         var result = UserFactory.GetUserByEmail($scope.email);
         result.then(function (result) {
