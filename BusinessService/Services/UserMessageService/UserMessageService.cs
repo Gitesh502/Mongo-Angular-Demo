@@ -74,7 +74,7 @@ namespace BusinessService.Services
         public IEnumerable<UserMessagesEntity> GetMessagesByUserId(string UserId)
         {
             var builder = Builders<UserMessages>.Filter;
-            var filter = builder.Eq("UserId",UserId);
+            var filter = builder.Eq("toUser", UserId);
             var lstMsgs = _unitOfWork.UserMessageRepositroy.GetMany(filter);
             var listUsers = _unitOfWork.UserRepository.GetMany(Builders<users>.Filter.Empty);
             var document2Lookup = listUsers.AsQueryable().ToLookup(x => x.Id);

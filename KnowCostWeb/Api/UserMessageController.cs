@@ -27,10 +27,10 @@ namespace KnowCostWeb.Api
         }
         [HttpGet]
         [Route("api/UserMessage/GetMessagesByUserId")]
-        public HttpResponseMessage GetMessagesByUserId(string UserId)
+        public HttpResponseMessage GetMessagesByUserId(string toUserId)
       {
-            string uid = User.Identity.GetUserId();
-            var userdetail = _userMessageService.GetMessagesByUserId(uid);
+            toUserId = User.Identity.GetUserId();
+            var userdetail = _userMessageService.GetMessagesByUserId(toUserId);
             if (userdetail != null)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, userdetail);
