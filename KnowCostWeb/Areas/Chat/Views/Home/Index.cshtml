@@ -48,29 +48,26 @@
                             <div class="widget-body">
                                 <div class="widget-main no-padding">
                                     <div class="dialogs">
-                                       
-                                      
-                                            <div class="itemdiv dialogdiv" ng-repeat="msg in messages track by $index">
-                                                <div class="user">
-                                                    <img alt="Alexa's Avatar" src="~/assets/images/avatars/avatar4.png">
+                                        <div class="itemdiv dialogdiv" ng-repeat="msg in messages track by $index">
+                                            <div class="user">
+                                                <img alt="Alexa's Avatar" src="~/assets/images/avatars/avatar4.png">
+                                            </div>
+                                            <div class="body">
+                                                <div class="time">
+                                                    <i class="ace-icon fa fa-clock-o"></i>
+                                                    <span class="green">4 sec</span>
                                                 </div>
-                                                <div class="body">
-                                                    <div class="time">
-                                                        <i class="ace-icon fa fa-clock-o"></i>
-                                                        <span class="green">4 sec</span>
-                                                    </div>
-                                                    <div class="name">
-                                                        <a href="#">{{msg.fullName}}</a>
-                                                    </div>
-                                                    <div class="text">{{msg.message}}</div>
-                                                    <div class="tools">
-                                                        <a href="#" class="btn btn-minier btn-info">
-                                                            <i class="icon-only ace-icon fa fa-share"></i>
-                                                        </a>
-                                                    </div>
+                                                <div class="name">
+                                                    <a href="#">{{msg.fullName}}</a>
+                                                </div>
+                                                <div class="text">{{msg.message}}</div>
+                                                <div class="tools">
+                                                    <a href="#" class="btn btn-minier btn-info">
+                                                        <i class="icon-only ace-icon fa fa-share"></i>
+                                                    </a>
                                                 </div>
                                             </div>
-                                     
+                                        </div>
                                     </div>
                                     <form>
                                         <div class="form-actions">
@@ -95,49 +92,11 @@
                         <div ng-repeat="x in privateChatBoxes track by $index">
                             <div class="row chat-window col-xs-5 col-md-4 privateChatWindow" ng-style="$index<=2?{'right':($index)*425}:{'right':0*425}" style="margin-left:10px;">
                                 <div class="col-xs-12 col-md-12">
-                                    @*<div class="panel panel-default">
-                                        <div class="panel-heading top-bar">
-                                            <div class="col-md-8 col-xs-8">
-                                                <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> {{x.FullName}}</h3>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4" style="text-align: right;">
-                                                <a href="#"><span id="minim_chat_window" class="head glyphicon glyphicon-minus icon_minim"></span></a>
-                                                <a href="#"><span class="glyphicon glyphicon-remove icon_close" ng-click="closePrivateChat(x.Uname,x.connectionId);"></span></a>
-                                            </div>
-                                        </div>
-                                        <div class="panel-body msg_container_base slide">
-                                            <div class="row msg_container base_sent" ng-class="(msg.from == UserInPrivateChat.name)?'row msg_container base_receive':'row msg_container base_sent'" ng-repeat="msg in PrivateMessages | filter:({to: UserInPrivateChat.ConnectionId}) track by $index">
-                                                <div class="col-md-2 col-xs-2 avatar" ng-if="msg.from == UserInPrivateChat.name">
-                                                    <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
-                                                </div>
-                                                <div class="col-md-10 col-xs-10">
-                                                    <div ng-class="(msg.from == UserInPrivateChat.name)?'messages msg_receive':'messages msg_sent'">
-                                                        <p>
-                                                            {{msg.message}}
-                                                        </p>
-                                                        <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2 col-xs-2 avatar" ng-if="msg.from != UserInPrivateChat.name">
-                                                    <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <div class="input-group">
-                                                <input autofocus type="text" ng-model="privateBoxMessage.pMessage" class="form-control input-sm" />
-                                                <span class="input-group-btn">
-                                                    <input type="button" class="btn btn-primary btn-sm" ng-click="sendPrivateMessage(x.connectionId,x.name);" value="Send" />
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>*@
-
                                     <div class="widget-box">
                                         <div class="widget-header">
                                             <h4 class="widget-title lighter smaller">
                                                 <i class="ace-icon fa fa-comment blue"></i>
-                                               {{x.FullName}}
+                                                {{x.FullName}}
                                             </h4>
                                             <div class="col-md-4 col-xs-4" style="text-align: right;float:right;padding-right:10px;padding-top:9px">
                                                 <a href="#"><span id="minim_chat_window" class="head glyphicon glyphicon-minus icon_minim"></span></a>
@@ -146,7 +105,8 @@
                                         </div>
                                         <div class="widget-body">
                                             <div class="widget-main no-padding">
-                                                <div class="dialogs">
+                                                <div class="customdialogs" style="padding-left:5px;">
+                                                    <div>&nbsp;</div>
                                                     <div class="itemdiv dialogdiv" ng-repeat="msg in PrivateMessages | filter:({to: x.connectionId}) track by $index">
                                                         <div class="user">
                                                             <img alt="Alexa's Avatar" src="~/assets/images/avatars/avatar4.png">

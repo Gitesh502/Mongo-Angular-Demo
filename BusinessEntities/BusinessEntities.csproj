@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="BusinessEntityModels\ConnectedUsers.cs" />
     <Compile Include="BusinessEntityModels\ConnectionMappings.cs" />
+    <Compile Include="BusinessEntityModels\Conversations.cs" />
     <Compile Include="BusinessEntityModels\UserMessages.cs" />
     <Compile Include="BusinessEntityModels\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

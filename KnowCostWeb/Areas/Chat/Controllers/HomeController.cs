@@ -21,8 +21,8 @@ namespace KnowCostWeb.Areas.Chat.Controllers
         }
         public ActionResult Index()
         {
-            var lstData = _iUserMessageService.GetMessagesByUserId(User.Identity.GetUserId());
-            return View(lstData);
+           
+            return View();
         }
         private IAuthenticationManager AuthenticationManager
         {

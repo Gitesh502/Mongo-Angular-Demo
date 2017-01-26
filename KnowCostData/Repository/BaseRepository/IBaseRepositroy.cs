@@ -15,5 +15,6 @@ namespace KnowCostData.Repository.BaseRepository
         T GetOne(FilterDefinition<T> where);
         T GetSingleReference(MongoDBRef refObj);
         IEnumerable<T> GetManyReference(MongoDBRef refObj);
+        void Update(T entity);
     }
 }

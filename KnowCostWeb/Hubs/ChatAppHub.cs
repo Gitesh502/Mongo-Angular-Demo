@@ -133,6 +133,8 @@ namespace KnowCostWeb
                 ue.Id =ObjectId.Parse(fromUserId);
                 List<string> PrivateMessages = new List<string>();
                 PrivateMessages.Add(toUserId);
+
+
                 UserMessagesEntity ume = new UserMessagesEntity();
                 ume.UserId = fromUserId;
                 ume.MessageId = Guid.NewGuid().ToString();
@@ -143,6 +145,23 @@ namespace KnowCostWeb
                 ume.toUserId = PrivateMessages;
                 ume.IsRead = false;
                 SaveMessageDetails(ume);
+
+                PrivateConversationsEntity pce = new PrivateConversationsEntity();
+                pce.FromUserId = ObjectId.Parse(fromUserId);
+                pce.ToUserId = ObjectId.Parse(toUserId);
+                pce.ConversationMessage = message;
+                pce.ConversationTime = DateTime.Now;
+                pce.IsRead = false;
+                pce.IsDeletedMessage = false;
+               
+                ConversationsEntity ce = new ConversationsEntity();
+                ce.FromUserId= ObjectId.Parse(fromUserId);
+                ce.ToUserId= ObjectId.Parse(toUserId);
+                ce.IsGroup = false;
+                ce.IsDeletedConversation = false;
+                ce.PrivateConversationList.Add(pce);
+
+
             }
 
 

@@ -1,4 +1,4 @@
-﻿var chatapp = angular.module('chatapp', ['ngDialog', 'toaster', 'ngAnimate', 'angular-web-notification', 'ui.grid','ui.grid.edit','ui.grid.autoResize','ng-backstretch'])
+﻿var chatapp = angular.module('chatapp', ['ngDialog', 'toaster', 'ngAnimate', 'angular-web-notification', 'ui.grid','ui.grid.edit','ui.grid.autoResize','ng-backstretch','angularMoment'])
     .filter('unique', function () {
     return function (items, filterOn) {
 
@@ -35,7 +35,10 @@
         }
         return items;
     };
-})
+    })
+//chatapp.constant('moment', require('moment-timezone'));
+
+
 //.animation('.slide', function () {
 //    var NG_HIDE_CLASS = 'ng-hide';
 //    return {
@@ -53,7 +56,10 @@
 //});
 chatapp.controller('ChatController', ChatController);
 chatapp.controller('ProfileController', ProfileController);
+chatapp.controller('NavBarController', NavBarController);
 chatapp.factory('DesktopNotificationsFactory', DesktopNotificationsFactory);
 chatapp.factory('UserFactory', UserFactory);
+chatapp.factory('ManageMessagesFactory', ManageMessagesFactory);
+chatapp.service('commonVariableService', commonVariableService);
 
 

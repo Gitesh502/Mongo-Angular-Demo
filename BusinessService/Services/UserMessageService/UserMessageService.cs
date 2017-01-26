@@ -20,7 +20,7 @@ namespace BusinessService.Services
         {
             _unitOfWork = new UnitOfWork();
             _db = new MongoClient();
-          
+
         }
         public bool SaveUserMessages(UserMessagesEntity UserMessages)
         {
@@ -30,7 +30,7 @@ namespace BusinessService.Services
                 cfg.CreateMap<UsersEntity, users>()
                .ForMember(a => a.UserProfile, opt => opt.MapFrom(s => s.UserProfile));
                 cfg.CreateMap<UserMessagesEntity, UserMessages>();
-                     //.ForMember(a => a.users, opt => opt.MapFrom(s => s.user));
+                //.ForMember(a => a.users, opt => opt.MapFrom(s => s.user));
 
 
             });
@@ -52,15 +52,15 @@ namespace BusinessService.Services
                 //yield return document1;
             }
 
-         
+
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<UserProfile, UserProfileEntity>();
                 cfg.CreateMap<users, UsersEntity>()
                      .ForMember(a => a.UserProfile, opt => opt.MapFrom(s => s.UserProfile));
                 cfg.CreateMap<UserMessages, UserMessagesEntity>();
-                     //.ForMember(a => a.user, opt => opt.MapFrom(s => s.users));
-                   
+                //.ForMember(a => a.user, opt => opt.MapFrom(s => s.users));
+
 
 
             });
@@ -74,9 +74,15 @@ namespace BusinessService.Services
         public IEnumerable<UserMessagesEntity> GetMessagesByUserId(string UserId)
         {
             var builder = Builders<UserMessages>.Filter;
-            var filter = builder.Eq("toUser", UserId);
-            var lstMsgs = _unitOfWork.UserMessageRepositroy.GetMany(filter);
-            var listUsers = _unitOfWork.UserRepository.GetMany(Builders<users>.Filter.Empty);
+            var filter = builder.AnyEq(a => a.toUserId, UserId);
+            var lstMsgs = _unitOfWork.UserMessageRepositroy.GetMany(filter).OrderByDescending(a=>a.MessageOn);
+            var lsttoUserIds = lstMsgs.Select(a => ObjectId.Parse(a.fromUserId)).ToList();
+            var listUsers = _unitOfWork.UserRepository.GetMany(Builders<users>.Filter.In(a=>a.Id, lsttoUserIds));
+
+            //var lstfromUserIds = lstMsgs.SelectMany(a => a.toUserId.Select(b => ObjectId.Parse(b)).ToList()).ToList();
+            // var listUsers = _unitOfWork.UserRepository.GetMany(Builders<users>.Filter.In(a=>a.Id, lstfromUserIds));//AnyIn(a=>a.Id.ToString().ToList(), lstfromUserIds));
+            //lstMsgs.ToList().ForEach(a => a.toUser = listUsers.ToList());//.Select(a => a.toUser.AddRange(listUsers.ToList()));
+
             var document2Lookup = listUsers.AsQueryable().ToLookup(x => x.Id);
             foreach (var document1 in lstMsgs.AsQueryable())
             {
@@ -96,7 +102,7 @@ namespace BusinessService.Services
                 cfg.CreateMap<users, UsersEntity>()
                      .ForMember(a => a.UserProfile, opt => opt.MapFrom(s => s.UserProfile));
                 cfg.CreateMap<UserMessages, UserMessagesEntity>();
-                     //.ForMember(a => a.user, opt => opt.MapFrom(s => s.users));
+                //.ForMember(a => a.user, opt => opt.MapFrom(s => s.users));
 
 
 

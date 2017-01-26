@@ -1,4 +1,4 @@
-﻿var ChatController = function ($scope, $filter, toaster, ngDialog, webNotification, DesktopNotificationsFactory, UserFactory, $interval) {
+﻿var ChatController = function ($scope, $filter, toaster, ngDialog, webNotification, DesktopNotificationsFactory, UserFactory, $interval, ManageMessagesFactory, commonVariableService) {
     $scope.chatHub = $.connection.chatAppHub;// initializes hub
 
     $scope.$parent.UserName = document.getElementById("hdnUserName").value;
@@ -24,7 +24,7 @@
     $scope.userId = document.getElementById("hdnUserId").value;
 
 
-
+    //$scope.lstfromMessages = [];
 
     $scope.groupMsg = "";
     $scope.message = "";
@@ -89,6 +89,7 @@
 
 
     $scope.init = function () {
+
         var localUser = angular.fromJson(localStorage.getItem('loggedUser'));
         if (localUser === null) {
             $scope.getLoggedUser();
@@ -101,6 +102,7 @@
             $scope.loggeduserDetails.email = localUser.UserProfile.Email;
             $scope.loggeduserDetails.userId = localUser.Id;
         }
+
         $scope.getRegisteredUsers();
         $scope.ConfigureList();
         $scope.beginVertScroll();
@@ -113,9 +115,7 @@
             console.log('An error occurred: ' + err);
         });
     }
-    $scope.getMessagesByToUserId = function () {
-        var result = UserFactory.GetUserByEmail($scope.email);
-    }
+
     $scope.getLoggedUser = function () {
         var result = UserFactory.GetUserByEmail($scope.email);
         result.then(function (result) {
@@ -184,7 +184,7 @@
         $scope.$apply();
 
         angular.forEach(messages, function (value, key) {
-            $scope.messages.push({ message: value.Message, username: value.UserName, email: value.Email, fullName: $scope.loggeduserDetails.fullName});
+            $scope.messages.push({ message: value.Message, username: value.UserName, email: value.Email, fullName: $scope.loggeduserDetails.fullName });
         });
 
         $scope.$apply();
@@ -240,17 +240,21 @@
         DesktopNotificationsFactory(Email + " says: ", message)
         $scope.groupMsg = "";
     }
-    $scope.chatHub.client.sendPrivateMessage = function (windowId, fromUserName, message,fromFullName) {
+    $scope.chatHub.client.sendPrivateMessage = function (windowId, fromUserName, message, fromFullName) {
         $scope.expand = true;
-        $scope.PrivateMessages.push({ to: windowId, from: fromUserName, message: message,fullName:fromFullName });
-        $scope.$apply();
-        if ($scope.$parent.UserName !== fromUserName) // otheruser's pm
-        {
-            if ($scope.UserInPrivateChat === null) {
-                $scope.UserInPrivateChat = { name: fromUserName, ConnectionId: privateChatBoxes }
-            }
+        $scope.PrivateMessages.push({ to: windowId, from: fromUserName, message: message, fullName: fromFullName });
+        if (fromUserName != $scope.$parent.UserName) {
+            var objMessage = { fullName: fromFullName, message: message, fromuserid: windowId, datetime: new Date() }
+            commonVariableService.setfromMessagesProperties(objMessage);
         }
         $scope.$apply();
+        //if ($scope.$parent.UserName !== fromUserName) // otheruser's pm
+        //{
+        //    if ($scope.UserInPrivateChat === null) {
+        //        $scope.UserInPrivateChat = { name: fromUserName, ConnectionId: privateChatBoxes }
+        //    }
+        //}
+        //$scope.$apply();
         $scope.privateBoxMessage.pMessage = "";
 
         //if ($scope.$parent.UserName !== fromUserName)
@@ -260,6 +264,7 @@
         $scope.privateMessageCount.userEmail = fromUserName;
         $scope.privateMessageCount.connectionId = windowId;
         $scope.$apply();
+       
     }
 
     //check if obejct is alreay is array object (compare two objects)
@@ -273,24 +278,31 @@
 
         return false;
     };
+    $scope.privateChatBoxes = commonVariableService.getPrivateChatBoxes();
     $scope.openInPrivate = function (isO) {
         var addToArray = true;
+       // $scope.privateChatBoxes = commonVariableService.getPrivateChatBoxes();
         for (var i = 0; i < $scope.privateChatBoxes.length; i++) {
             if ($scope.privateChatBoxes[i].connectionId === isO.x.ConnectionId) {
                 addToArray = false;
             }
         }
         if (addToArray) {
-            $scope.privateChatBoxes.push({ Uname: isO.x.UserName, connectionId: isO.x.ConnectionId, FullName: isO.x.FullName });
+
+          //  $scope.privateChatBoxes.push({ Uname: isO.x.UserName, connectionId: isO.x.ConnectionId, FullName: isO.x.FullName });
+            commonVariableService.setPrivateChatBoxes({ Uname: isO.x.UserName, connectionId: isO.x.ConnectionId, FullName: isO.x.FullName });
         }
+        $scope.privateChatBoxes = commonVariableService.getPrivateChatBoxes();
         $scope.chatName = isO.x.UserName;
         if ($scope.privateMessageCount.userEmail === isO.x.Email) {
             $scope.privateMessageCount.isRead = true;
             $scope.privateMessageCount.messageCount = 0;
         }
+       
     }
 
     $scope.closePrivateChat = function (Email, ConnectionId) {
+        $scope.privateChatBoxes = commonVariableService.getPrivateChatBoxes();
         for (i = $scope.privateChatBoxes.length - 1; i >= 0; i--) {
             if ($scope.privateChatBoxes[i].connectionId === ConnectionId) $scope.privateChatBoxes.splice(i, 1);
         }
@@ -351,4 +363,4 @@
     };
 }
 
-ChatController.$inject = ['$scope', '$filter', 'toaster', 'ngDialog', 'webNotification', 'DesktopNotificationsFactory', 'UserFactory', '$interval'];
+ChatController.$inject = ['$scope', '$filter', 'toaster', 'ngDialog', 'webNotification', 'DesktopNotificationsFactory', 'UserFactory', '$interval', 'ManageMessagesFactory', 'commonVariableService'];

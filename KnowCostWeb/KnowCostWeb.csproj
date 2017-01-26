@@ -417,9 +417,11 @@
     <Content Include="chatapp\chatapp.js" />
     <Content Include="chatapp\ChatJquery.js" />
     <Content Include="chatapp\controllers\ChatController.js" />
+    <Content Include="chatapp\controllers\NavBarController.js" />
     <Content Include="chatapp\controllers\ProfileController.js" />
     <Content Include="chatapp\factories\GetUserDetailsFactroy.js" />
     <Content Include="chatapp\factories\ManageMessagesFactory.js" />
+    <Content Include="chatapp\services\commonVariableService.js" />
     <Content Include="CommonApp\Factories\DesktopNotificationsFactory.js" />
     <Content Include="CommonApp\Factories\UserFactory.js" />
     <Content Include="Content\bootstrap.css" />
@@ -469,12 +471,14 @@
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-local-storage.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-moment.min.js" />
     <Content Include="Scripts\angular-resource.js" />
     <Content Include="Scripts\angular-resource.min.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Chat\Views\Home\Index.cshtml" />
@@ -625,7 +629,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49306</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:10518/</IISUrl>
+          <IISUrl>http://localhost:10502/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

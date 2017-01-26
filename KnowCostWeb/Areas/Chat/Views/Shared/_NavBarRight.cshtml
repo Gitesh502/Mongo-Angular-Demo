@@ -1,14 +1,12 @@
-﻿@using BusinessEntities.BusinessEntityModels;
-@model IEnumerable<UserMessagesEntity>
-<div class="navbar-buttons navbar-header pull-right" role="navigation">
-    <ul class="nav ace-nav">
+﻿<div class="navbar-buttons navbar-header pull-right" role="navigation" ng-controller="NavBarController" ng-init="initNavbar();">
+    <ul class="nav ace-nav ">
         <li class="grey dropdown-modal dark">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <i class="ace-icon fa fa-tasks"></i>
                 <span class="badge badge-grey">4</span>
             </a>
 
-            <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+            <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close ">
                 <li class="dropdown-header">
                     <i class="ace-icon fa fa-check"></i>
                     4 Tasks to complete
@@ -154,37 +152,36 @@
         <li class="green dropdown-modal">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
-                <span class="badge badge-success">@Model.Where(a => a.IsRead == false && a.isPrivate == true).Count()</span>
+                <span class="badge badge-success">{{lstfromMessages.length}}</span>
             </a>
 
             <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
                 <li class="dropdown-header">
                     <i class="ace-icon fa fa-envelope-o"></i>
-                   <label>@Model.Where(a=>a.IsRead==false && a.isPrivate==true).Count()</label>
+                  <span>Recent </span> <label>{{lstfromMessages.length}}</label>
                 </li>
 
                 <li class="dropdown-content ace-scroll" style="position: relative;">
-                    <div class="scroll-track" style="display: none;"><div class="scroll-bar"></div></div><div class="scroll-content" style="max-height: 200px;">
+                    <div class="topnotifications">
                         <ul class="dropdown-menu dropdown-navbar">
-                            @foreach (var item in Model)
-                            {
-                                <li>
-                                    <a href="#" class="clearfix">
+                           
+                                <li ng-repeat="x in lstfromMessages">
+                                    <a ng-click="openInPrivateBox(this);" class="clearfix">
                                         <img src="~/assets/images/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar">
                                         <span class="msg-body">
                                             <span class="msg-title">
-                                                <span class="blue">@item.fromUser.FirstName</span>
-                                                @item.MessageDescription
+                                                <span class="blue">{{x.fullName}}</span>
+                                               {{x.message}}
                                             </span>
 
                                             <span class="msg-time">
                                                 <i class="ace-icon fa fa-clock-o"></i>
-                                                <span>a moment ago</span>
+                                                <span am-time-ago="x.datetime"></span>
                                             </span>
                                         </span>
                                     </a>
                                 </li>
-                            }
+                           
                            
 
                         </ul>

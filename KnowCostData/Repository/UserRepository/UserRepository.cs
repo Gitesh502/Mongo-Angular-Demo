@@ -13,7 +13,7 @@ using KnowCostData.Repository.BaseRepository;
 
 namespace KnowCostData.Repository
 {
-    public class UserRepository:BaseRepository<users>, IUserRepository
+    public class UserRpository:BaseRepository<users>, IUserRepository
     {
         public users GetUserByEmail(string email)
         {
@@ -40,5 +40,6 @@ namespace KnowCostData.Repository
 
             return Response;
         }
+       
     }
 }

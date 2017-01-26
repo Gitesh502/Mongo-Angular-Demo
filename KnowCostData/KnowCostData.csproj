@@ -68,6 +68,7 @@
     <Compile Include="Entity\AspNetUsers.cs" />
     <Compile Include="Entity\ConnectedUsers.cs" />
     <Compile Include="Entity\ConnectionMappings.cs" />
+    <Compile Include="Entity\Conversations.cs" />
     <Compile Include="Entity\IAspNetUsers.cs" />
     <Compile Include="Entity\IMongoEntity.cs" />
     <Compile Include="Entity\MongoConnectionHandler.cs" />
@@ -79,10 +80,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BaseRepository\BaseRepository.cs" />
     <Compile Include="Repository\BaseRepository\IBaseRepositroy.cs" />
-    <Compile Include="Repository\ChatRepository\ChatRepository.cs" />
-    <Compile Include="Repository\ChatRepository\IChatRepository.cs" />
-    <Compile Include="Repository\UserRepository\IUserRepository.cs" />
-    <Compile Include="Repository\UserRepository\UserRepository.cs" />
     <Compile Include="ResponseDTO\UserResponseDTO.cs" />
     <Compile Include="Services\EntityService.cs" />
     <Compile Include="Services\IEntityService.cs" />

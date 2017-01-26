@@ -1,10 +1,11 @@
-﻿function ManageMessages($http, $q) {
+﻿function ManageMessagesFactory($http, $q) {
     var ManageMessages = {};
 
-    ManageMessages.getMessagesByFromUserId = function (fromUserId) {
+    ManageMessages.getMessagesByFromUserId = function (toUserId) {
         var deferedObj = $q.defer();
-        $http.get('/api/UserMessage/GetMessagesByUserId', fromUserId)
+        $http.get('/api/UserMessage/GetMessagesByUserId?toUserId=texzt')
         .success(function (response) {
+            console.log(response)
             deferedObj.resolve({ success: true, Id: 1, response: response });
         })
         .error(function () {
@@ -14,4 +15,4 @@
     }
     return ManageMessages;
 }
-ManageMessages.$inject = ['$http', '$q']
+ManageMessagesFactory.$inject = ['$http', '$q']
