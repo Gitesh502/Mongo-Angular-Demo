@@ -13,6 +13,7 @@
         });
         return deferedObj.promise;
     }
+
     return ManageMessages;
 }
 ManageMessagesFactory.$inject = ['$http', '$q']

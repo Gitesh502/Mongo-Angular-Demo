@@ -66,23 +66,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\AspNetUsers.cs" />
-    <Compile Include="Entity\ConnectedUsers.cs" />
-    <Compile Include="Entity\ConnectionMappings.cs" />
     <Compile Include="Entity\Conversations.cs" />
-    <Compile Include="Entity\IAspNetUsers.cs" />
     <Compile Include="Entity\IMongoEntity.cs" />
     <Compile Include="Entity\MongoConnectionHandler.cs" />
     <Compile Include="Entity\MongoEntity.cs" />
-    <Compile Include="Entity\UserMessages.cs" />
     <Compile Include="Helper\FetchDBRef.cs" />
-    <Compile Include="Models\ChatModel.cs" />
-    <Compile Include="Models\UserDetailsDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BaseRepository\BaseRepository.cs" />
     <Compile Include="Repository\BaseRepository\IBaseRepositroy.cs" />
-    <Compile Include="ResponseDTO\UserResponseDTO.cs" />
-    <Compile Include="Services\EntityService.cs" />
-    <Compile Include="Services\IEntityService.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

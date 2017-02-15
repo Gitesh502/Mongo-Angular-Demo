@@ -8,12 +8,12 @@ namespace KnowCostData.Entity
         public MongoConnectionHandler(string Collection)
         {
              //const string connectionString = "mongodb://localhost:27017";
-             const string connectionString = "mongodb://gitesh:techno@ds129469.mlab.com:29469/knowcost";
+            const string connectionString = "mongodb://gitesh:techno@ds131729.mlab.com:31729/chatapp";
             //// Get a thread-safe client object by using a connection string
             var mongoClient = new MongoClient(connectionString);
 
             //// Get a reference to a server object from the Mongo client object
-            const string databaseName = "knowcost";
+            const string databaseName = "chatapp";
             var mongoServer = mongoClient.GetDatabase(databaseName);
 
             //// Get a reference to the "retrogamesweb" database object 

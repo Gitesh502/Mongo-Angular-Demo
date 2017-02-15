@@ -97,7 +97,7 @@ namespace KnowCostWeb.Controllers
             //    message = ManageMessageId.Error;
             //}
             //return RedirectToAction("ManageLogins", new { Message = message });
-            var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
+            var linkedAccounts =await UserManager.GetLoginsAsync(User.Identity.GetUserId());
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return View(linkedAccounts);
         }

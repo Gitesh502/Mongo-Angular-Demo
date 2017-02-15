@@ -1,59 +1,64 @@
 ﻿using KnowCostData;
+using KnowCostData.Helper;
 using BusinessEntities.BusinessEntityModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using MongoDB.Driver;
 using KnowCostData.Entity;
 using AutoMapper;
+using MongoDB.Bson;
+using System.Data;
+using System.Net;
+using System.Security.Cryptography;
 
-namespace BusinessService.Services 
+namespace BusinessService.Services
 {
-   
+
 
     public class UserService : IUserService
     {
         private readonly UnitOfWork _unitOfWork;
         public UserService()
         {
-            _unitOfWork=new UnitOfWork();
+            _unitOfWork = new UnitOfWork();
 
         }
-
-        public UsersEntity GetUserByEmail(string email)
+        public AspNetUsersEntity GetUserByEmail(string email)
         {
-            var builder = Builders<users>.Filter;
-            var filter = builder.Eq("Email",email);
+            var builder = Builders<AspNetUsers>.Filter;
+            var filter = builder.Eq("Email", email);
             var userde = _unitOfWork.UserRepository.GetOne(filter);
             if (userde != null)
             {
-                var config = new MapperConfiguration(cfg => {
-                    cfg.CreateMap<users, UsersEntity>();
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<AspNetUsers, AspNetUsersEntity>()
+                      .ForMember(a => a.UserProfile, opt => opt.MapFrom(s => s.UserProfile));
                     cfg.CreateMap<UserProfile, UserProfileEntity>();
                 });
                 IMapper mapper = config.CreateMapper();
-
-                var userModel = mapper.Map<users, UsersEntity>(userde);
+                var userModel = mapper.Map<AspNetUsers, AspNetUsersEntity>(userde);
                 return userModel;
             }
             return null;
         }
 
-        public IEnumerable<UsersEntity> GetRegisteredUsers()
+        public IEnumerable<AspNetUsersEntity> GetRegisteredUsers()
         {
-            var builder = Builders<users>.Filter;
+            var builder = Builders<AspNetUsers>.Filter;
             var filter = builder.Empty;
             var listUsers = _unitOfWork.UserRepository.GetMany(filter);
-            var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<users, UsersEntity>();
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<AspNetUsers, AspNetUsersEntity>()
+                     .ForMember(a => a.UserProfile, opt => opt.MapFrom(s => s.UserProfile));
                 cfg.CreateMap<UserProfile, UserProfileEntity>();
-
             });
             IMapper mapper = config.CreateMapper();
 
-            var userModel = mapper.Map<IEnumerable<users>, IEnumerable<UsersEntity>>(listUsers);
+            var userModel = mapper.Map<IEnumerable<AspNetUsers>, IEnumerable<AspNetUsersEntity>>(listUsers);
             return userModel;
         }
     }

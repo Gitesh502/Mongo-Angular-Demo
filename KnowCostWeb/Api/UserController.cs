@@ -1,7 +1,4 @@
-﻿
-//using KnowCostData.Entity;
-//using KnowCostData.Repository;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using BusinessService.Services;
@@ -37,6 +34,18 @@ namespace KnowCostWeb.Api
             {
                 return Request.CreateResponse(HttpStatusCode.OK, userdetail);
             }
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No data found");
+        }
+        [HttpGet]
+        [Route("api/User/GetPrevConversationByUserId")]
+        public HttpResponseMessage GetPrevConversationByUserId(string fromUserId,string toUserId)
+        {
+
+            //var userdetail = _userService.GetPrevConversationByUserId(fromUserId, toUserId);
+            //if (userdetail != null)
+            //{
+            //    return Request.CreateResponse(HttpStatusCode.OK, userdetail);
+            //}
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No data found");
         }
     }

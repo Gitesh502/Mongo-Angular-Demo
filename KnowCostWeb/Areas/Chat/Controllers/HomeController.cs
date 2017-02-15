@@ -14,14 +14,15 @@ namespace KnowCostWeb.Areas.Chat.Controllers
     public class HomeController : Controller
     {
         // GET: Chat/Home
-        private readonly IUserMessageService _iUserMessageService;
-        public HomeController()
-        {
-            _iUserMessageService = new UserMessageService();
-        }
+//private readonly IUserMessageService _iUserMessageService;
+        //public HomeController()
+        //{
+        //    _iUserMessageService = new UserMessageService();
+        //}
         public ActionResult Index()
         {
-           
+            string loggedUserId = User.Identity.GetUserId();
+
             return View();
         }
         private IAuthenticationManager AuthenticationManager

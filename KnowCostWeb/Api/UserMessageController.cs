@@ -8,17 +8,29 @@ namespace KnowCostWeb.Api
 {
     public class UserMessageController : ApiController
     {
-         private readonly IUserMessageService _userMessageService;
-        public UserMessageController(IUserMessageService UserMessageService)
+        private readonly IConversationService _iconversationservice;
+        public UserMessageController(IConversationService IConversationService)
         {
-            this._userMessageService = UserMessageService;
+            this._iconversationservice = IConversationService;
         }
         [HttpGet]
         [Route("api/UserMessage/GetUserMessages")]
         public HttpResponseMessage GetRegisteredUsers()
         {
 
-            var userdetail = _userMessageService.GetMessages();
+            //var userdetail = _userMessageService.GetMessages();
+            //if (userdetail != null)
+            //{
+            //    return Request.CreateResponse(HttpStatusCode.OK, userdetail);
+            //}
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No data found");
+        }
+        [HttpGet]
+        [Route("api/UserMessage/GetMessagesByUserId")]
+        public HttpResponseMessage GetMessagesByUserId(string toUserId)
+        {
+            toUserId = User.Identity.GetUserId();
+            var userdetail = _iconversationservice.GetPreviousMessagesByUserId(toUserId);
             if (userdetail != null)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, userdetail);
@@ -26,11 +38,11 @@ namespace KnowCostWeb.Api
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No data found");
         }
         [HttpGet]
-        [Route("api/UserMessage/GetMessagesByUserId")]
-        public HttpResponseMessage GetMessagesByUserId(string toUserId)
-      {
-            toUserId = User.Identity.GetUserId();
-            var userdetail = _userMessageService.GetMessagesByUserId(toUserId);
+        [Route("api/UserMessage/GetMessagesByConversationId")]
+        public HttpResponseMessage GetMessagesByConversationId(string fromUserId, string toUserId)
+        {
+            //toUserId = User.Identity.GetUserId();
+            var userdetail = _iconversationservice.GetPreviousMessagesByConversationId(fromUserId, toUserId, 0);
             if (userdetail != null)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, userdetail);

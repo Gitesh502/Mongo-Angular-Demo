@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using AspNet.Identity.MongoDB;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System;
+using MongoDB.Bson;
 //using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace KnowCostWeb.Models
@@ -26,6 +29,8 @@ namespace KnowCostWeb.Models
         public string LastName { get; set; }
         public string FullName { get; set; }
         public virtual UserProfile UserProfile { get; set; }
+        public virtual List<Conversations> MasterConversation { get; set; }
+       
     }
     public class UserProfile
     {
@@ -34,6 +39,51 @@ namespace KnowCostWeb.Models
         public string FirstName{get;set;}
         public string LastName{get;set;}
         public string Email{get;set;}
+    }
+    public class Conversations
+    {
+        public Conversations()
+        {
+            PrivateConversationList = new List<PrivateConversations>();
+            GroupConversationList = new List<GroupConversations>();
+
+        }
+        public string ConversationId { get; set; }
+        public ObjectId FromUserId { get; set; }
+        public ObjectId ToUserId { get; set; }
+        public bool IsGroup { get; set; }
+        public bool IsDeletedConversation { get; set; }
+        public DateTime ConversationStartedOn { get; set; }
+        public List<PrivateConversations> PrivateConversationList { get; set; }
+        public List<GroupConversations> GroupConversationList { get; set; }
+    }
+
+    public class PrivateConversations
+    {
+        public ObjectId PrivateFromUserId { get; set; }
+        public ObjectId PrivateToUserId { get; set; }
+        public string ConversationMessage { get; set; }
+        public DateTime ConversationTime { get; set; }
+        public bool IsRead { get; set; }
+        public bool IsDeletedMessage { get; set; }
+
+    }
+
+    public class GroupConversations
+    {
+        public ObjectId GroupFromUserId { get; set; }
+        public List<ObjectId> GroupUserIds { get; set; }
+        public bool GroupIsRead { get; set; }
+        public DateTime GroupConversationTime { get; set; }
+        public string GroupConversationMessage { get; set; }
+        public bool IsDeletedGroupConversation { get; set; }
+        public ObjectId GroupStartedBy { get; set; }
+    }
+    public class Messages
+    {
+        public string fromUserName { get; set; }
+        public ObjectId fromUserId { get; set; }
+        public string MessageDesc { get; set; }
     }
     //public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     //{

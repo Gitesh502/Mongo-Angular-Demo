@@ -11,45 +11,25 @@ namespace KnowCostData
 {
     public class UnitOfWork : IDisposable
     {
-        
-        private BaseRepository<users> _userRepository;
-        private BaseRepository<ConnectedUsers> _connectedUserRepository;
-        private BaseRepository<ConnectionMappings> _connectionMappingRepository;
-        private BaseRepository<UserMessages> _UserMessageRepository;
-        public BaseRepository<users> UserRepository
+
+        private BaseRepository<AspNetUsers> _userRepository;
+        private BaseRepository<Conversation> _ConversationRepository;
+        public BaseRepository<AspNetUsers> UserRepository
         {
             get
             {
                 if (this._userRepository == null)
-                    this._userRepository = new BaseRepository<users>();
+                    this._userRepository = new BaseRepository<AspNetUsers>();
                 return _userRepository;
             }
         }
-        public BaseRepository<ConnectedUsers> ConnectedUserRepository
+        public BaseRepository<Conversation> ConversationRepository
         {
             get
             {
-                if (this._connectedUserRepository == null)
-                    this._connectedUserRepository = new BaseRepository<ConnectedUsers>();
-                return _connectedUserRepository;
-            }
-        }
-        public BaseRepository<ConnectionMappings> ConnectionMappingRepository
-        {
-            get
-            {
-                if (this._connectionMappingRepository == null)
-                    this._connectionMappingRepository = new BaseRepository<ConnectionMappings>();
-                return _connectionMappingRepository;
-            }
-        }
-        public BaseRepository<UserMessages> UserMessageRepositroy
-        {
-            get
-            {
-                if (this._UserMessageRepository == null)
-                    this._UserMessageRepository = new BaseRepository<UserMessages>();
-                return _UserMessageRepository;
+                if (this._ConversationRepository == null)
+                    this._ConversationRepository = new BaseRepository<Conversation>();
+                return _ConversationRepository;
             }
         }
         private bool disposed = false;

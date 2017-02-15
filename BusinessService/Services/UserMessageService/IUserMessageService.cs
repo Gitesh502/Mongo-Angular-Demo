@@ -9,8 +9,8 @@ namespace BusinessService.Services
 {
     public interface IUserMessageService 
     {
-        bool SaveUserMessages(UserMessagesEntity UserMessages);
-        IEnumerable<UserMessagesEntity> GetMessages();
-        IEnumerable<UserMessagesEntity> GetMessagesByUserId(string UserId);
+        //bool SaveUserMessages(UserMessagesEntity UserMessages);
+        //IEnumerable<UserMessagesEntity> GetMessages();
+        //IEnumerable<UserMessagesEntity> GetMessagesByUserId(string UserId);
     }
 }

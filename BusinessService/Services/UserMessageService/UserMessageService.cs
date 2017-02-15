@@ -27,7 +27,7 @@ namespace BusinessService.Services
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<UserProfileEntity, UserProfile>();
-                cfg.CreateMap<UsersEntity, users>()
+                cfg.CreateMap<AspNetUsersEntity, AspNetUsers>()
                .ForMember(a => a.UserProfile, opt => opt.MapFrom(s => s.UserProfile));
                 cfg.CreateMap<UserMessagesEntity, UserMessages>();
                 //.ForMember(a => a.users, opt => opt.MapFrom(s => s.user));
@@ -44,7 +44,7 @@ namespace BusinessService.Services
             var builder = Builders<UserMessages>.Filter;
             var filter = builder.Empty;
             var lstMsgs = _unitOfWork.UserMessageRepositroy.GetMany(filter);
-            var listUsers = _unitOfWork.UserRepository.GetMany(Builders<users>.Filter.Empty);
+            var listUsers = _unitOfWork.UserRepository.GetMany(Builders<AspNetUsers>.Filter.Empty);
             var document2Lookup = listUsers.AsQueryable().ToLookup(x => x.Id);
             foreach (var document1 in lstMsgs.AsQueryable())
             {
@@ -56,7 +56,7 @@ namespace BusinessService.Services
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<UserProfile, UserProfileEntity>();
-                cfg.CreateMap<users, UsersEntity>()
+                cfg.CreateMap<AspNetUsers, AspNetUsersEntity>()
                      .ForMember(a => a.UserProfile, opt => opt.MapFrom(s => s.UserProfile));
                 cfg.CreateMap<UserMessages, UserMessagesEntity>();
                 //.ForMember(a => a.user, opt => opt.MapFrom(s => s.users));
@@ -77,7 +77,7 @@ namespace BusinessService.Services
             var filter = builder.AnyEq(a => a.toUserId, UserId);
             var lstMsgs = _unitOfWork.UserMessageRepositroy.GetMany(filter).OrderByDescending(a=>a.MessageOn);
             var lsttoUserIds = lstMsgs.Select(a => ObjectId.Parse(a.fromUserId)).ToList();
-            var listUsers = _unitOfWork.UserRepository.GetMany(Builders<users>.Filter.In(a=>a.Id, lsttoUserIds));
+            var listUsers = _unitOfWork.UserRepository.GetMany(Builders<AspNetUsers>.Filter.In(a => a.Id, lsttoUserIds));
 
             //var lstfromUserIds = lstMsgs.SelectMany(a => a.toUserId.Select(b => ObjectId.Parse(b)).ToList()).ToList();
             // var listUsers = _unitOfWork.UserRepository.GetMany(Builders<users>.Filter.In(a=>a.Id, lstfromUserIds));//AnyIn(a=>a.Id.ToString().ToList(), lstfromUserIds));
@@ -98,10 +98,17 @@ namespace BusinessService.Services
             //lstMsgs.relusers = listUsers;
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<UserProfile, UserProfileEntity>();
-                cfg.CreateMap<users, UsersEntity>()
-                     .ForMember(a => a.UserProfile, opt => opt.MapFrom(s => s.UserProfile));
                 cfg.CreateMap<UserMessages, UserMessagesEntity>();
+                cfg.CreateMap<AspNetUsers, AspNetUsersEntity>()
+                    .ForMember(a => a.UserProfile, opt => opt.MapFrom(s => s.UserProfile))
+                    .ForMember(a => a.MasterConversation, opt => opt.MapFrom(s => s.MasterConversation));
+                cfg.CreateMap<UserProfile, UserProfileEntity>();
+                cfg.CreateMap<Conversations, ConversationsEntity>()
+                  .ForMember(a => a.PrivateConversationList, opt => opt.MapFrom(s => s.PrivateConversationList))
+                  .ForMember(a => a.GroupConversationList, opt => opt.MapFrom(s => s.GroupConversationList));
+                cfg.CreateMap<PrivateConversations, PrivateConversationsEntity>();
+                cfg.CreateMap<GroupConversations, GroupConversationsEntity>();
+               
                 //.ForMember(a => a.user, opt => opt.MapFrom(s => s.users));
 
 

@@ -49,7 +49,7 @@ namespace KnowCostData.Repository.BaseRepository
             return obj.MongoCollection.FindAsync(Builders<T>.Filter.Eq("_id", ObjectId.Parse(refObj.Id.AsString))).Result.ToList();
         }
 
-        public virtual void Update(T entity, FilterDefinition<T> filter, UpdateDefinition<T> update)
+        public virtual void Update(FilterDefinition<T> filter, UpdateDefinition<T> update)
         {
             obj = new MongoConnectionHandler<T>(typeof(T).Name);
             obj.MongoCollection.UpdateOneAsync(filter,update);

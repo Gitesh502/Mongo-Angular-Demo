@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Security.Claims;
 using MongoDB.Bson;
+using System.Collections.Generic;
 
 namespace KnowCostWeb.Api
 {
@@ -69,8 +70,11 @@ namespace KnowCostWeb.Api
                             FirstName = model.FirstName,
                             LastName = model.LastName,
                             Email = model.Email,
-                        }
+                        },
+                        MasterConversation = new List<Conversations>()
+                        {
 
+                        }
                     };
                     var result = await UserManager.CreateAsync(user, model.Password);
 
@@ -185,7 +189,7 @@ namespace KnowCostWeb.Api
             }
             catch (Exception ex)
             {
-
+                response.ErrorString=ex.Message.ToString();
             }
             return response;
         }

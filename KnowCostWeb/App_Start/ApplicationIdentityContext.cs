@@ -23,10 +23,10 @@ namespace KnowCostWeb
             // todo add settings where appropriate to switch server & database in your own application
             // var client = new MongoClient("mongodb://localhost:27017");
             //var client = new MongoClient("mongodb://chatapp-mongo:0Ot0q1C69gy9JRxqgjxvddAljHL0IIVGPHGJ0wV7dsXLecytzeLOZ3alpKkWc3DWSy5I4L7wxA6ZB5XQkZorrg==@chatapp-mongo.documents.azure.com:10250/?ssl=true");
-            var client = new MongoClient("mongodb://gitesh:techno@ds129469.mlab.com:29469/knowcost");
-            var database = client.GetDatabase("knowcost");
-            var users = database.GetCollection<ApplicationUser>("users");
-            var roles = database.GetCollection<IdentityRole>("roles");
+            var client = new MongoClient("mongodb://gitesh:techno@ds131729.mlab.com:31729/chatapp");
+            var database = client.GetDatabase("chatapp");
+            var users = database.GetCollection<ApplicationUser>("AspNetUsers");
+            var roles = database.GetCollection<IdentityRole>("Roles");
             return new ApplicationIdentityContext(users, roles);
         }
 

@@ -1,4 +1,5 @@
 ﻿using BusinessEntities.BusinessEntityModels;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BusinessService.Services
 {
     public interface IUserService
     {
-        UsersEntity GetUserByEmail(string email);
-        IEnumerable<UsersEntity> GetRegisteredUsers();
+        AspNetUsersEntity GetUserByEmail(string email);
+        IEnumerable<AspNetUsersEntity> GetRegisteredUsers();
     }
 }

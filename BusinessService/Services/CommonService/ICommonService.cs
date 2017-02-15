@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessService.Services.CommonService
+namespace BusinessService.Services
 {
     public interface ICommonService
     {
+        long GetUniqueConversationId(string fromUserId, string toUserId);
     }
 }

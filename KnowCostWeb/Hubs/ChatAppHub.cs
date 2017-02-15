@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using KnowCostWeb.Models;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Owin;
 using KnowCostWeb.ChatUtilities;
@@ -20,6 +20,9 @@ namespace KnowCostWeb
    
     public class ChatAppHub : Hub
     {
+
+        static List<ConversationsModel> Conversatations { get; set; }
+
         static List<string> ConnectedUserIds = new List<string>();
         static List<MessageDetail> CurrentMessage = new List<MessageDetail>();
         static List<ChatUtilities.ConnectedUsers> OnlineUsers = new List<ChatUtilities.ConnectedUsers>();
@@ -28,13 +31,13 @@ namespace KnowCostWeb
       
       
         private readonly IUserService _iuserservices;
-        private readonly IConnectionMappingService _iConnectionMappingService;
-        private readonly IUserMessageService _iUserMessageService;
-        public ChatAppHub(IUserService IUserServices,IConnectionMappingService IConnectionMappingService,IUserMessageService IUserMessageService)
+        private readonly ICommonService _iCommonService;
+        private readonly IConversationService _iConversationService;
+        public ChatAppHub(IUserService IUserServices,ICommonService ICommonService,IConversationService IConversationService)
         {
             _iuserservices = IUserServices;
-            _iConnectionMappingService = IConnectionMappingService;
-            _iUserMessageService = IUserMessageService;
+            _iCommonService = ICommonService;
+            _iConversationService = IConversationService;
         }
         public void Connect(string NickName)
         {
@@ -84,14 +87,16 @@ namespace KnowCostWeb
         {
             var id = Context.User.Identity.GetUserId();
             var userId = Context.User.Identity.GetUserId();
-            ConnectionMappingsEntity objCom = new ConnectionMappingsEntity();
-            objCom.ConnectionId = id;
-            objCom.UserId = userId;
-            objCom.IsActive = true;
-            objCom.ConnectedOn = DateTime.Now;
-            _iConnectionMappingService.SaveConnectionMapping(objCom);
+            //ConnectionMappingsEntity objCom = new ConnectionMappingsEntity();
+            //objCom.ConnectionId = id;
+            //objCom.UserId = userId;
+            //objCom.IsActive = true;
+            //objCom.ConnectedOn = DateTime.Now;
+            //_iConnectionMappingService.SaveConnectionMapping(objCom);
             return base.OnConnected();
         }
+
+        #region Send Group Message
         public void SendMessageToAll(string userName, string message,string Email)
         {
             string fromUserId = Context.User.Identity.GetUserId();
@@ -100,19 +105,10 @@ namespace KnowCostWeb
             Clients.Users(ConnectedUserIds).messageReceived(userName, message, Email, fromFullName);
 
             var exceptThisUser = ConnectedUserIds.Where(a => a != fromUserId).ToList();
-            UserMessagesEntity ume = new UserMessagesEntity();
-            ume.UserId = fromUserId;
-            ume.MessageId = Guid.NewGuid().ToString();
-            ume.MessageDescription = message;
-            ume.MessageOn = DateTime.Now;
-            ume.isPrivate = false;
-            ume.fromUserId = fromUserId;
-            ume.toUserId = exceptThisUser;
-            ume.IsRead = false;
-
-            SaveMessageDetails(ume);
-
         }
+        #endregion
+
+        #region Send PrivateMessage
         public void SendPrivateMessage(string toUserId, string message)
         {
 
@@ -121,6 +117,7 @@ namespace KnowCostWeb
             var toUser = OnlineUsers.FirstOrDefault(x => x.ConnectionId == toUserId);
             var fromUser = OnlineUsers.FirstOrDefault(x => x.ConnectionId == fromUserId);
             var fromFullName = OnlineUsers.FirstOrDefault(x => x.ConnectionId == fromUserId).FullName;
+
             if (toUser != null && fromUser != null)
             {
                 // send to 
@@ -129,43 +126,32 @@ namespace KnowCostWeb
                 // send to caller user
                 Clients.Caller.sendPrivateMessage(toUserId, fromUser.UserName, message, fromFullName);
 
-                UsersEntity ue = new UsersEntity();
-                ue.Id =ObjectId.Parse(fromUserId);
-                List<string> PrivateMessages = new List<string>();
-                PrivateMessages.Add(toUserId);
-
-
-                UserMessagesEntity ume = new UserMessagesEntity();
-                ume.UserId = fromUserId;
-                ume.MessageId = Guid.NewGuid().ToString();
-                ume.MessageDescription = message;
-                ume.MessageOn = DateTime.Now;
-                ume.isPrivate = true;
-                ume.fromUserId = fromUserId;
-                ume.toUserId = PrivateMessages;
-                ume.IsRead = false;
-                SaveMessageDetails(ume);
-
-                PrivateConversationsEntity pce = new PrivateConversationsEntity();
-                pce.FromUserId = ObjectId.Parse(fromUserId);
-                pce.ToUserId = ObjectId.Parse(toUserId);
-                pce.ConversationMessage = message;
-                pce.ConversationTime = DateTime.Now;
-                pce.IsRead = false;
-                pce.IsDeletedMessage = false;
                
-                ConversationsEntity ce = new ConversationsEntity();
-                ce.FromUserId= ObjectId.Parse(fromUserId);
-                ce.ToUserId= ObjectId.Parse(toUserId);
-                ce.IsGroup = false;
-                ce.IsDeletedConversation = false;
-                ce.PrivateConversationList.Add(pce);
 
-
+                PrivateConversationEntity PEC = new PrivateConversationEntity
+                {
+                    FromUserId = ObjectId.Parse(fromUserId),
+                    ToUserId = ObjectId.Parse(toUserId),
+                    ConversationMessage = message,
+                    IsRead = false,
+                    IsDeletedMessage = false,
+                    MessageOn = DateTime.Now
+                };
+                ConversationEntity OCE = new ConversationEntity();
+                {
+                    OCE.ConversationId = GetConversationID(fromUserId, toUserId);
+                    OCE.IsGroup = false;
+                    OCE.IsDeletedConversation = false;
+                    OCE.From = ObjectId.Parse(fromUserId);
+                    OCE.To = ObjectId.Parse(toUserId);
+                    OCE.PrivateConversationList.Add(PEC);
+                };
+                UpdateConversations(ObjectId.Parse(fromUserId), ObjectId.Parse(toUserId), OCE);
             }
-
-
         }
+        #endregion
+
+
         public override Task OnDisconnected(bool stopCalled)
         {
             var item = OnlineUsers.FirstOrDefault(x => x.ConnectionId == Context.User.Identity.GetUserId());
@@ -181,10 +167,16 @@ namespace KnowCostWeb
             return base.OnDisconnected(stopCalled);
         }
 
-        public bool SaveMessageDetails(UserMessagesEntity UserMessages)
+       
+        public void UpdateConversations(ObjectId fromUserId,ObjectId toUserId,ConversationEntity ObjCE)
         {
-           return  _iUserMessageService.SaveUserMessages(UserMessages);
+            _iConversationService.UpdateConversations(fromUserId, toUserId, ObjCE);
         }
+        public long GetConversationID(string fromUserId,string toUserId)
+        {
+            return _iCommonService.GetUniqueConversationId(fromUserId, toUserId);
+        }
+
         #region Save cache
 
         private void AddMessageinCache(string userName, string message, string Email)

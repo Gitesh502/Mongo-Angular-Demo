@@ -60,6 +60,7 @@ namespace KnowCostWeb.ChatUtilities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName { get; set; }
+        public string ConversationId { get; set; }
         [System.ComponentModel.DefaultValue(false)]
         public bool IsPriavteBoxOpened { get; set; }
 

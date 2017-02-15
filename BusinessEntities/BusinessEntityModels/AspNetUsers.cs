@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BusinessEntities.BusinessEntityModels
 {
-    public class UsersEntity
+    public class AspNetUsersEntity
     {
         public ObjectId Id { get; set; }
         public string UserName { get; set; }

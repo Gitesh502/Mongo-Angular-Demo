@@ -272,6 +272,7 @@
     <Compile Include="Hubs\ChatAppHub.cs" />
     <Compile Include="Hubs\ChatUtilities.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ChatModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MongoModel.cs" />
@@ -498,6 +499,8 @@
     <Content Include="assets\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Areas\Chat\Views\Shared\_NavBarRight.cshtml" />
     <Content Include="Areas\Chat\Views\Shared\_allRelatedUsers.cshtml" />
+    <None Include="Properties\PublishProfiles\chatapp2017 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\chatapp2017 - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\ChatApp2017 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -568,7 +571,6 @@
     <Folder Include="chatapp\directives\" />
     <Folder Include="chatapp\filters\" />
     <Folder Include="Images\ProfileImages\" />
-    <Folder Include="ResponseDTO\" />
     <Folder Include="Views\ApplicationBaseController\" />
     <Folder Include="Views\ApplicationBase\" />
   </ItemGroup>

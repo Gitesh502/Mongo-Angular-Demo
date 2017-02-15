@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace KnowCostData.Entity
 {
     [BsonIgnoreExtraElements]
-    public class users:MongoEntity
+    public class AspNetUsers:MongoEntity
     {
        
         public string UserName { get; set; }
@@ -24,6 +24,7 @@ namespace KnowCostData.Entity
         public string FullName { get; set; }
         public UserProfile UserProfile { get; set; }
        
+       
     }
 
     public class UserProfile: MongoEntity
@@ -35,4 +36,5 @@ namespace KnowCostData.Entity
         public string NickName { get; set; }
         public string Email { get; set; }
     }
+    
 }
